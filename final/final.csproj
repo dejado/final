@@ -41,7 +41,7 @@
     </Reference>
     <Reference Include="Calendar.NET, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\Calendar.NET.dll</HintPath>
+      <HintPath>..\..\final01\final\bin\Calendar.NET.dll</HintPath>
     </Reference>
     <Reference Include="FFmpeg.AutoGen, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FFmpeg.AutoGen.7.0.0\lib\netstandard2.0\FFmpeg.AutoGen.dll</HintPath>
