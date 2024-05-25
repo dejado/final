@@ -130,6 +130,7 @@
             this.mysql_pcb = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.groupBox7.SuspendLayout();
             this.panel3.SuspendLayout();
             this.groupBox10.SuspendLayout();
@@ -161,6 +162,7 @@
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.button2);
             this.panel3.Controls.Add(this.button1);
             this.panel3.Controls.Add(this.groupBox10);
             this.panel3.Controls.Add(this.groupBox9);
@@ -783,20 +785,24 @@
             // 
             // vision_bad
             // 
+            this.vision_bad.AutoSize = true;
             this.vision_bad.Dock = System.Windows.Forms.DockStyle.Top;
-            this.vision_bad.Location = new System.Drawing.Point(0, 343);
+            this.vision_bad.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.vision_bad.Location = new System.Drawing.Point(0, 418);
             this.vision_bad.Name = "vision_bad";
-            this.vision_bad.Size = new System.Drawing.Size(166, 23);
+            this.vision_bad.Size = new System.Drawing.Size(166, 28);
             this.vision_bad.TabIndex = 25;
             this.vision_bad.Text = "불량 신호";
             this.vision_bad.UseVisualStyleBackColor = true;
             // 
             // vision_good
             // 
+            this.vision_good.AutoSize = true;
             this.vision_good.Dock = System.Windows.Forms.DockStyle.Top;
-            this.vision_good.Location = new System.Drawing.Point(0, 320);
+            this.vision_good.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.vision_good.Location = new System.Drawing.Point(0, 390);
             this.vision_good.Name = "vision_good";
-            this.vision_good.Size = new System.Drawing.Size(166, 23);
+            this.vision_good.Size = new System.Drawing.Size(166, 28);
             this.vision_good.TabIndex = 24;
             this.vision_good.Text = "양품 신호";
             this.vision_good.UseVisualStyleBackColor = true;
@@ -807,30 +813,34 @@
             this.label4.Dock = System.Windows.Forms.DockStyle.Top;
             this.label4.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.label4.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label4.Location = new System.Drawing.Point(0, 302);
+            this.label4.Location = new System.Drawing.Point(0, 368);
             this.label4.Margin = new System.Windows.Forms.Padding(0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(166, 18);
+            this.label4.Size = new System.Drawing.Size(166, 22);
             this.label4.TabIndex = 23;
             this.label4.Text = "비전 신호";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // mold_dobot
             // 
+            this.mold_dobot.AutoSize = true;
             this.mold_dobot.Dock = System.Windows.Forms.DockStyle.Top;
-            this.mold_dobot.Location = new System.Drawing.Point(0, 279);
+            this.mold_dobot.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.mold_dobot.Location = new System.Drawing.Point(0, 340);
             this.mold_dobot.Name = "mold_dobot";
-            this.mold_dobot.Size = new System.Drawing.Size(166, 23);
+            this.mold_dobot.Size = new System.Drawing.Size(166, 28);
             this.mold_dobot.TabIndex = 22;
             this.mold_dobot.Text = "몰드 두봇 완료";
             this.mold_dobot.UseVisualStyleBackColor = true;
             // 
             // attach_dobot
             // 
+            this.attach_dobot.AutoSize = true;
             this.attach_dobot.Dock = System.Windows.Forms.DockStyle.Top;
-            this.attach_dobot.Location = new System.Drawing.Point(0, 256);
+            this.attach_dobot.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.attach_dobot.Location = new System.Drawing.Point(0, 312);
             this.attach_dobot.Name = "attach_dobot";
-            this.attach_dobot.Size = new System.Drawing.Size(166, 23);
+            this.attach_dobot.Size = new System.Drawing.Size(166, 28);
             this.attach_dobot.TabIndex = 21;
             this.attach_dobot.Text = "어태치 두봇 완료";
             this.attach_dobot.UseVisualStyleBackColor = true;
@@ -841,30 +851,34 @@
             this.label3.Dock = System.Windows.Forms.DockStyle.Top;
             this.label3.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.label3.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label3.Location = new System.Drawing.Point(0, 238);
+            this.label3.Location = new System.Drawing.Point(0, 290);
             this.label3.Margin = new System.Windows.Forms.Padding(0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(166, 18);
+            this.label3.Size = new System.Drawing.Size(166, 22);
             this.label3.TabIndex = 20;
             this.label3.Text = "두봇 완료";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // pcbWare
             // 
+            this.pcbWare.AutoSize = true;
             this.pcbWare.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pcbWare.Location = new System.Drawing.Point(0, 215);
+            this.pcbWare.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.pcbWare.Location = new System.Drawing.Point(0, 262);
             this.pcbWare.Name = "pcbWare";
-            this.pcbWare.Size = new System.Drawing.Size(166, 23);
+            this.pcbWare.Size = new System.Drawing.Size(166, 28);
             this.pcbWare.TabIndex = 18;
             this.pcbWare.Text = "pcb창고 전진";
             this.pcbWare.UseVisualStyleBackColor = true;
             // 
             // moldWare
             // 
+            this.moldWare.AutoSize = true;
             this.moldWare.Dock = System.Windows.Forms.DockStyle.Top;
-            this.moldWare.Location = new System.Drawing.Point(0, 192);
+            this.moldWare.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.moldWare.Location = new System.Drawing.Point(0, 234);
             this.moldWare.Name = "moldWare";
-            this.moldWare.Size = new System.Drawing.Size(166, 23);
+            this.moldWare.Size = new System.Drawing.Size(166, 28);
             this.moldWare.TabIndex = 17;
             this.moldWare.Text = "몰드창고 후진";
             this.moldWare.UseVisualStyleBackColor = true;
@@ -875,30 +889,34 @@
             this.label5.Dock = System.Windows.Forms.DockStyle.Top;
             this.label5.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.label5.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label5.Location = new System.Drawing.Point(0, 174);
+            this.label5.Location = new System.Drawing.Point(0, 212);
             this.label5.Margin = new System.Windows.Forms.Padding(0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(166, 18);
+            this.label5.Size = new System.Drawing.Size(166, 22);
             this.label5.TabIndex = 16;
             this.label5.Text = "창고 실린더 센서";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // pware_sensor
             // 
+            this.pware_sensor.AutoSize = true;
             this.pware_sensor.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pware_sensor.Location = new System.Drawing.Point(0, 151);
+            this.pware_sensor.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.pware_sensor.Location = new System.Drawing.Point(0, 184);
             this.pware_sensor.Name = "pware_sensor";
-            this.pware_sensor.Size = new System.Drawing.Size(166, 23);
+            this.pware_sensor.Size = new System.Drawing.Size(166, 28);
             this.pware_sensor.TabIndex = 9;
             this.pware_sensor.Text = "pcb창고";
             this.pware_sensor.UseVisualStyleBackColor = true;
             // 
             // mware_sensor
             // 
+            this.mware_sensor.AutoSize = true;
             this.mware_sensor.Dock = System.Windows.Forms.DockStyle.Top;
-            this.mware_sensor.Location = new System.Drawing.Point(0, 128);
+            this.mware_sensor.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.mware_sensor.Location = new System.Drawing.Point(0, 156);
             this.mware_sensor.Name = "mware_sensor";
-            this.mware_sensor.Size = new System.Drawing.Size(166, 23);
+            this.mware_sensor.Size = new System.Drawing.Size(166, 28);
             this.mware_sensor.TabIndex = 8;
             this.mware_sensor.Text = "몰드창고";
             this.mware_sensor.UseVisualStyleBackColor = true;
@@ -909,50 +927,58 @@
             this.label2.Dock = System.Windows.Forms.DockStyle.Top;
             this.label2.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.label2.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label2.Location = new System.Drawing.Point(0, 110);
+            this.label2.Location = new System.Drawing.Point(0, 134);
             this.label2.Margin = new System.Windows.Forms.Padding(0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(166, 18);
+            this.label2.Size = new System.Drawing.Size(166, 22);
             this.label2.TabIndex = 7;
             this.label2.Text = "창고 센서";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ware_sensor
             // 
+            this.ware_sensor.AutoSize = true;
             this.ware_sensor.Dock = System.Windows.Forms.DockStyle.Top;
-            this.ware_sensor.Location = new System.Drawing.Point(0, 87);
+            this.ware_sensor.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.ware_sensor.Location = new System.Drawing.Point(0, 106);
             this.ware_sensor.Name = "ware_sensor";
-            this.ware_sensor.Size = new System.Drawing.Size(166, 23);
+            this.ware_sensor.Size = new System.Drawing.Size(166, 28);
             this.ware_sensor.TabIndex = 4;
             this.ware_sensor.Text = "적재";
             this.ware_sensor.UseVisualStyleBackColor = true;
             // 
             // mold_sensor
             // 
+            this.mold_sensor.AutoSize = true;
             this.mold_sensor.Dock = System.Windows.Forms.DockStyle.Top;
-            this.mold_sensor.Location = new System.Drawing.Point(0, 64);
+            this.mold_sensor.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.mold_sensor.Location = new System.Drawing.Point(0, 78);
             this.mold_sensor.Name = "mold_sensor";
-            this.mold_sensor.Size = new System.Drawing.Size(166, 23);
+            this.mold_sensor.Size = new System.Drawing.Size(166, 28);
             this.mold_sensor.TabIndex = 3;
             this.mold_sensor.Text = "몰드";
             this.mold_sensor.UseVisualStyleBackColor = true;
             // 
             // vision_sensor
             // 
+            this.vision_sensor.AutoSize = true;
             this.vision_sensor.Dock = System.Windows.Forms.DockStyle.Top;
-            this.vision_sensor.Location = new System.Drawing.Point(0, 41);
+            this.vision_sensor.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.vision_sensor.Location = new System.Drawing.Point(0, 50);
             this.vision_sensor.Name = "vision_sensor";
-            this.vision_sensor.Size = new System.Drawing.Size(166, 23);
+            this.vision_sensor.Size = new System.Drawing.Size(166, 28);
             this.vision_sensor.TabIndex = 2;
             this.vision_sensor.Text = "비전";
             this.vision_sensor.UseVisualStyleBackColor = true;
             // 
             // chip_sensor
             // 
+            this.chip_sensor.AutoSize = true;
             this.chip_sensor.Dock = System.Windows.Forms.DockStyle.Top;
-            this.chip_sensor.Location = new System.Drawing.Point(0, 18);
+            this.chip_sensor.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.chip_sensor.Location = new System.Drawing.Point(0, 22);
             this.chip_sensor.Name = "chip_sensor";
-            this.chip_sensor.Size = new System.Drawing.Size(166, 23);
+            this.chip_sensor.Size = new System.Drawing.Size(166, 28);
             this.chip_sensor.TabIndex = 1;
             this.chip_sensor.Text = "칩셋";
             this.chip_sensor.UseVisualStyleBackColor = true;
@@ -966,7 +992,7 @@
             this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Margin = new System.Windows.Forms.Padding(0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(166, 18);
+            this.label1.Size = new System.Drawing.Size(166, 22);
             this.label1.TabIndex = 0;
             this.label1.Text = "위치 센서";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -997,30 +1023,36 @@
             // 
             // grn_run
             // 
+            this.grn_run.AutoSize = true;
             this.grn_run.Dock = System.Windows.Forms.DockStyle.Top;
-            this.grn_run.Location = new System.Drawing.Point(0, 320);
+            this.grn_run.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.grn_run.Location = new System.Drawing.Point(0, 390);
             this.grn_run.Name = "grn_run";
-            this.grn_run.Size = new System.Drawing.Size(166, 23);
+            this.grn_run.Size = new System.Drawing.Size(166, 28);
             this.grn_run.TabIndex = 18;
             this.grn_run.Text = "GRN";
             this.grn_run.UseVisualStyleBackColor = true;
             // 
             // yel_run
             // 
+            this.yel_run.AutoSize = true;
             this.yel_run.Dock = System.Windows.Forms.DockStyle.Top;
-            this.yel_run.Location = new System.Drawing.Point(0, 297);
+            this.yel_run.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.yel_run.Location = new System.Drawing.Point(0, 362);
             this.yel_run.Name = "yel_run";
-            this.yel_run.Size = new System.Drawing.Size(166, 23);
+            this.yel_run.Size = new System.Drawing.Size(166, 28);
             this.yel_run.TabIndex = 17;
             this.yel_run.Text = "YEL";
             this.yel_run.UseVisualStyleBackColor = true;
             // 
             // red_run
             // 
+            this.red_run.AutoSize = true;
             this.red_run.Dock = System.Windows.Forms.DockStyle.Top;
-            this.red_run.Location = new System.Drawing.Point(0, 274);
+            this.red_run.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.red_run.Location = new System.Drawing.Point(0, 334);
             this.red_run.Name = "red_run";
-            this.red_run.Size = new System.Drawing.Size(166, 23);
+            this.red_run.Size = new System.Drawing.Size(166, 28);
             this.red_run.TabIndex = 16;
             this.red_run.Text = "RED";
             this.red_run.UseVisualStyleBackColor = true;
@@ -1031,30 +1063,34 @@
             this.label10.Dock = System.Windows.Forms.DockStyle.Top;
             this.label10.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.label10.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label10.Location = new System.Drawing.Point(0, 256);
+            this.label10.Location = new System.Drawing.Point(0, 312);
             this.label10.Margin = new System.Windows.Forms.Padding(0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(166, 18);
+            this.label10.Size = new System.Drawing.Size(166, 22);
             this.label10.TabIndex = 15;
             this.label10.Text = "램프";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // moldDobot_run
             // 
+            this.moldDobot_run.AutoSize = true;
             this.moldDobot_run.Dock = System.Windows.Forms.DockStyle.Top;
-            this.moldDobot_run.Location = new System.Drawing.Point(0, 233);
+            this.moldDobot_run.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.moldDobot_run.Location = new System.Drawing.Point(0, 284);
             this.moldDobot_run.Name = "moldDobot_run";
-            this.moldDobot_run.Size = new System.Drawing.Size(166, 23);
+            this.moldDobot_run.Size = new System.Drawing.Size(166, 28);
             this.moldDobot_run.TabIndex = 14;
             this.moldDobot_run.Text = "몰드 동작 신호";
             this.moldDobot_run.UseVisualStyleBackColor = true;
             // 
             // attachDobot_run
             // 
+            this.attachDobot_run.AutoSize = true;
             this.attachDobot_run.Dock = System.Windows.Forms.DockStyle.Top;
-            this.attachDobot_run.Location = new System.Drawing.Point(0, 210);
+            this.attachDobot_run.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.attachDobot_run.Location = new System.Drawing.Point(0, 256);
             this.attachDobot_run.Name = "attachDobot_run";
-            this.attachDobot_run.Size = new System.Drawing.Size(166, 23);
+            this.attachDobot_run.Size = new System.Drawing.Size(166, 28);
             this.attachDobot_run.TabIndex = 13;
             this.attachDobot_run.Text = "어태치 동작 신호";
             this.attachDobot_run.UseVisualStyleBackColor = true;
@@ -1065,30 +1101,34 @@
             this.label9.Dock = System.Windows.Forms.DockStyle.Top;
             this.label9.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.label9.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label9.Location = new System.Drawing.Point(0, 192);
+            this.label9.Location = new System.Drawing.Point(0, 234);
             this.label9.Margin = new System.Windows.Forms.Padding(0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(166, 18);
+            this.label9.Size = new System.Drawing.Size(166, 22);
             this.label9.TabIndex = 12;
             this.label9.Text = "두봇 동작 신호";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // pcbdown_run
             // 
+            this.pcbdown_run.AutoSize = true;
             this.pcbdown_run.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pcbdown_run.Location = new System.Drawing.Point(0, 169);
+            this.pcbdown_run.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.pcbdown_run.Location = new System.Drawing.Point(0, 206);
             this.pcbdown_run.Name = "pcbdown_run";
-            this.pcbdown_run.Size = new System.Drawing.Size(166, 23);
+            this.pcbdown_run.Size = new System.Drawing.Size(166, 28);
             this.pcbdown_run.TabIndex = 11;
             this.pcbdown_run.Text = "pcb 후진";
             this.pcbdown_run.UseVisualStyleBackColor = true;
             // 
             // pcbup_run
             // 
+            this.pcbup_run.AutoSize = true;
             this.pcbup_run.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pcbup_run.Location = new System.Drawing.Point(0, 146);
+            this.pcbup_run.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.pcbup_run.Location = new System.Drawing.Point(0, 178);
             this.pcbup_run.Name = "pcbup_run";
-            this.pcbup_run.Size = new System.Drawing.Size(166, 23);
+            this.pcbup_run.Size = new System.Drawing.Size(166, 28);
             this.pcbup_run.TabIndex = 10;
             this.pcbup_run.Text = "pcb 전진";
             this.pcbup_run.UseVisualStyleBackColor = true;
@@ -1099,40 +1139,46 @@
             this.label8.Dock = System.Windows.Forms.DockStyle.Top;
             this.label8.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.label8.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label8.Location = new System.Drawing.Point(0, 128);
+            this.label8.Location = new System.Drawing.Point(0, 156);
             this.label8.Margin = new System.Windows.Forms.Padding(0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(166, 18);
+            this.label8.Size = new System.Drawing.Size(166, 22);
             this.label8.TabIndex = 9;
             this.label8.Text = "pcb 투입";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // vision_run
             // 
+            this.vision_run.AutoSize = true;
             this.vision_run.Dock = System.Windows.Forms.DockStyle.Top;
-            this.vision_run.Location = new System.Drawing.Point(0, 105);
+            this.vision_run.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.vision_run.Location = new System.Drawing.Point(0, 128);
             this.vision_run.Name = "vision_run";
-            this.vision_run.Size = new System.Drawing.Size(166, 23);
+            this.vision_run.Size = new System.Drawing.Size(166, 28);
             this.vision_run.TabIndex = 8;
             this.vision_run.Text = "비전 스토퍼";
             this.vision_run.UseVisualStyleBackColor = true;
             // 
             // mold_run
             // 
+            this.mold_run.AutoSize = true;
             this.mold_run.Dock = System.Windows.Forms.DockStyle.Top;
-            this.mold_run.Location = new System.Drawing.Point(0, 82);
+            this.mold_run.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.mold_run.Location = new System.Drawing.Point(0, 100);
             this.mold_run.Name = "mold_run";
-            this.mold_run.Size = new System.Drawing.Size(166, 23);
+            this.mold_run.Size = new System.Drawing.Size(166, 28);
             this.mold_run.TabIndex = 7;
             this.mold_run.Text = "몰드 스토퍼";
             this.mold_run.UseVisualStyleBackColor = true;
             // 
             // chip_run
             // 
+            this.chip_run.AutoSize = true;
             this.chip_run.Dock = System.Windows.Forms.DockStyle.Top;
-            this.chip_run.Location = new System.Drawing.Point(0, 59);
+            this.chip_run.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.chip_run.Location = new System.Drawing.Point(0, 72);
             this.chip_run.Name = "chip_run";
-            this.chip_run.Size = new System.Drawing.Size(166, 23);
+            this.chip_run.Size = new System.Drawing.Size(166, 28);
             this.chip_run.TabIndex = 6;
             this.chip_run.Text = "칩셋 스토퍼";
             this.chip_run.UseVisualStyleBackColor = true;
@@ -1143,20 +1189,22 @@
             this.label7.Dock = System.Windows.Forms.DockStyle.Top;
             this.label7.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.label7.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label7.Location = new System.Drawing.Point(0, 41);
+            this.label7.Location = new System.Drawing.Point(0, 50);
             this.label7.Margin = new System.Windows.Forms.Padding(0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(166, 18);
+            this.label7.Size = new System.Drawing.Size(166, 22);
             this.label7.TabIndex = 5;
             this.label7.Text = "스토퍼";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // con_run
             // 
+            this.con_run.AutoSize = true;
             this.con_run.Dock = System.Windows.Forms.DockStyle.Top;
-            this.con_run.Location = new System.Drawing.Point(0, 18);
+            this.con_run.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.con_run.Location = new System.Drawing.Point(0, 22);
             this.con_run.Name = "con_run";
-            this.con_run.Size = new System.Drawing.Size(166, 23);
+            this.con_run.Size = new System.Drawing.Size(166, 28);
             this.con_run.TabIndex = 4;
             this.con_run.Text = "컨베이어 동작";
             this.con_run.UseVisualStyleBackColor = true;
@@ -1170,7 +1218,7 @@
             this.label6.Location = new System.Drawing.Point(0, 0);
             this.label6.Margin = new System.Windows.Forms.Padding(0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(166, 18);
+            this.label6.Size = new System.Drawing.Size(166, 22);
             this.label6.TabIndex = 3;
             this.label6.Text = "컨베이어";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1264,6 +1312,16 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(1084, 288);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 28;
+            this.button2.Text = "button2";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // product
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -1292,7 +1350,9 @@
             this.groupBox1.PerformLayout();
             this.tablePanel.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
             this.ResumeLayout(false);
@@ -1402,5 +1462,6 @@
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
     }
 }

@@ -47,10 +47,13 @@ namespace final
         int yellow;
         int green;
 
-        string chip_lot = storage.chip;
-        string pcb_lot = storage.pcb;
-        string mold_lot = storage.mold;
+        string chip_lot;
+        string pcb_lot;
+        string mold_lot;
 
+        string chip_num;
+        string pcb_num;
+        string mold_num;
 
         PictureBox process;
         PictureBox pcb;
@@ -60,7 +63,7 @@ namespace final
             InitializeComponent();
             InitializeTimer();
 
-            plc.ActLogicalStationNumber = 3;    // PLC 논리 스테이션 번호 설정
+            plc.ActLogicalStationNumber = 1;    // PLC 논리 스테이션 번호 설정
 
             process =new PictureBox();
             process.Image = Properties.Resources.process;
@@ -132,17 +135,38 @@ namespace final
         }
         private void text()
         {
+            chip_lot = storage.chip;
+            pcb_lot = storage.pcb;
+            mold_lot = storage.mold;
 
-            if (!string.IsNullOrEmpty(chip_lot) && !string.IsNullOrEmpty(pcb_lot) && !string.IsNullOrEmpty(mold_lot))
+            if (!string.IsNullOrEmpty(chip_lot))
             {
-                string chip_num = chipNum(int.Parse(chip_lot));
-                string pcb_num=pcbNum(int.Parse(pcb_lot));
-                string mold_num=moldNum(int.Parse(mold_lot));
-
+                chip_num = chipNum(int.Parse(chip_lot));
                 mysql_chip.Text = "lot : "+chip_lot +", num : "+ chip_num+"개";
-                mysql_pcb.Text = "lot : "+pcb_lot +", num :  "+pcb_num+"개";
-                mysql_mold.Text = "lot : " + mold_lot + ", num : "+mold_num+"개";
             }
+            else if (string.IsNullOrEmpty(chip_lot))
+            {
+                mysql_chip.Text = "없음";
+            }
+            if(!string.IsNullOrEmpty(pcb_lot))
+            {
+                pcb_num = pcbNum(int.Parse(pcb_lot));
+                mysql_pcb.Text = "lot : " + pcb_lot + ", num :  " + pcb_num + "개";
+            }
+            else if (string.IsNullOrEmpty(pcb_lot))
+            {
+                mysql_pcb.Text = "없음";
+            }
+            if(!string.IsNullOrEmpty(mold_lot))
+            {
+                mold_num = moldNum(int.Parse(mold_lot));
+                mysql_mold.Text = "lot : " + mold_lot + ", num : " + mold_num + "개";
+            }
+            else if (string.IsNullOrEmpty(mold_lot))
+            {
+                mysql_mold.Text = "없음";
+            }
+
 
         }
         private string chipNum(int chip)
@@ -178,6 +202,7 @@ namespace final
             }
             return num;
         }
+
         private string pcbNum(int pcb)
         {
             string connectionString = "Server=127.0.0.1;Database=final;Uid=final;Pwd=final1234!;";
@@ -243,6 +268,198 @@ namespace final
                 connection.Close();
             }
             return num;
+        }
+        private void chipUpdate(string chip, string chip_num)
+        {
+            string connectionString = "Server=127.0.0.1;Database=final;Uid=final;Pwd=final1234!;";
+            MySqlConnection connection = new MySqlConnection(connectionString);
+
+            if (!int.TryParse(chip, out int lot))
+            {
+                MessageBox.Show("chip_num 값이 유효한 정수가 아닙니다.");
+                return;
+            }
+
+            if (!int.TryParse(chip_num, out int num))
+            {
+                MessageBox.Show("chip_num 값이 유효한 정수가 아닙니다.");
+                return;
+            }
+
+            // Decrement num
+            num -= 1;
+
+            try
+            {
+                connection.Open();
+                string query;
+                if (num <= 0)
+                {
+                    query = "delete FROM chip WHERE lot=@lot";
+                    storage.chip = "";
+                }
+                else
+                {
+                    query = "UPDATE chip SET num=@num WHERE lot=@lot";
+                }
+
+                // 쿼리 생성
+
+
+                using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                {
+                    // 파라미터 추가
+                    cmd.Parameters.AddWithValue("@num", num);
+                    cmd.Parameters.AddWithValue("@lot", lot);
+
+                    // 쿼리 실행
+                    int rowsAffected = cmd.ExecuteNonQuery();
+                    if (rowsAffected > 0)
+                    {
+                        MessageBox.Show("업데이트 성공");
+                    }
+                    else
+                    {
+                        MessageBox.Show("업데이트 실패");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+        private void pcbUpdate(string pcb, string pcb_num)
+        {
+            string connectionString = "Server=127.0.0.1;Database=final;Uid=final;Pwd=final1234!;";
+            MySqlConnection connection = new MySqlConnection(connectionString);
+
+            if (!int.TryParse(pcb, out int lot))
+            {
+                MessageBox.Show("pcb_num 값이 유효한 정수가 아닙니다.");
+                return;
+            }
+
+            if (!int.TryParse(pcb_num, out int num))
+            {
+                MessageBox.Show("pcb_num 값이 유효한 정수가 아닙니다.");
+                return;
+            }
+
+            // Decrement num
+            num -= 1;
+
+            try
+            {
+                connection.Open();
+                string query;
+                if (num <= 0)
+                {
+                    query = "delete FROM pcb WHERE lot=@lot";
+                    storage.pcb="";
+                }
+                else
+                {
+                    query = "UPDATE pcb SET num=@num WHERE lot=@lot";
+                }
+
+                // 쿼리 생성
+
+
+                using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                {
+                    // 파라미터 추가
+                    cmd.Parameters.AddWithValue("@num", num);
+                    cmd.Parameters.AddWithValue("@lot", lot);
+
+                    // 쿼리 실행
+                    int rowsAffected = cmd.ExecuteNonQuery();
+                    if (rowsAffected > 0)
+                    {
+                        MessageBox.Show("업데이트 성공");
+                    }
+                    else
+                    {
+                        MessageBox.Show("업데이트 실패");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+        private void moldUpdate(string mold,string mold_num)
+        {
+            string connectionString = "Server=127.0.0.1;Database=final;Uid=final;Pwd=final1234!;";
+            MySqlConnection connection = new MySqlConnection(connectionString);
+
+            if (!int.TryParse(mold, out int lot))
+            {
+                MessageBox.Show("mold_num 값이 유효한 정수가 아닙니다.");
+                return;
+            }
+
+            if (!int.TryParse(mold_num, out int num))
+            {
+                MessageBox.Show("mold_num 값이 유효한 정수가 아닙니다.");
+                return;
+            }
+
+            // Decrement num
+            num -= 1;
+
+            try
+            {
+                connection.Open();
+                string query;
+                if (num <= 0)
+                {
+                    query = "delete FROM mold WHERE lot=@lot";
+                    storage.mold = "";
+                }
+                else
+                {
+                    query = "UPDATE mold SET num=@num WHERE lot=@lot";
+                }
+
+                // 쿼리 생성
+
+
+                using (MySqlCommand cmd = new MySqlCommand(query, connection))
+                {
+                    // 파라미터 추가
+                    cmd.Parameters.AddWithValue("@num", num);
+                    cmd.Parameters.AddWithValue("@lot", lot);
+
+                    // 쿼리 실행
+                    int rowsAffected = cmd.ExecuteNonQuery();
+                    if (rowsAffected > 0)
+                    {
+                        MessageBox.Show("업데이트 성공");
+                    }
+                    else
+                    {
+                        MessageBox.Show("업데이트 실패");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
         }
         private void sensor()
         {
@@ -537,20 +754,20 @@ namespace final
 
         private void finish_Click(object sender, EventArgs e)
         {
-            plc.SetDevice("M115", 1);
+            plc.SetDevice("M8187", 1);
         }
 
         private void Lstart_Click(object sender, EventArgs e)
         {
             choose choice = new choose();
             choice.Show();
-
+            
             if (!string.IsNullOrEmpty(chip_lot) && !string.IsNullOrEmpty(pcb_lot) && !string.IsNullOrEmpty(mold_lot))
             {
                 plc.SetDevice("M90", 1);
-                plc.SetDevice("M8187", 1);
+                plc.SetDevice("M8191", 1);
             }
-
+            
         }
 
         private void Adobot_MouseDown(object sender, MouseEventArgs e)
@@ -575,6 +792,14 @@ namespace final
         {
             choose choice = new choose();
             choice.Show();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(chip_num) && !string.IsNullOrEmpty(pcb_num) && !string.IsNullOrEmpty(mold_num))
+            {
+                moldUpdate(mold_lot, mold_num);
+            }
         }
     }
 }
