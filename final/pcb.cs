@@ -1,41 +1,31 @@
-﻿using System;
-using System.Collections;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
 
 namespace final
 {
-    public partial class warehouse : UserControl
+    public partial class pcb : Form
     {
-        string currentTable = "pcb"; // 현재 테이블을 추적하기 위한 변수
-
-        public warehouse()
+        public pcb()
         {
             InitializeComponent();
-            ShowGrid(currentTable); // 기본으로 "pcb" 테이블 표시
-
-            // 버튼 클릭 이벤트 핸들러 설정
-            pcbBt.Click += (sender, e) => ShowGrid("pcb");
-            moldBt.Click += (sender, e) => ShowGrid("mold");
-            chipBt.Click += (sender, e) => ShowGrid("chip");
-            goodBt.Click += (sender, e) => ShowGrid("good");
-            badBt.Click += (sender, e) => ShowGrid("bad");
+            ShowGrid();
+            gridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         }
 
-        // 데이터 그리드 뷰에 테이블 내용을 표시하는 메서드
-        public void ShowGrid(string tableName)
-        {
-            currentTable = tableName; // 현재 테이블을 업데이트
 
-            ware_grid.Rows.Clear(); // 데이터 그리드 뷰 초기화
+        // 데이터 그리드 뷰에 테이블 내용을 표시하는 메서드
+        public void ShowGrid()
+        {
+
+            gridView.Rows.Clear(); // 데이터 그리드 뷰 초기화
 
             string connectionString = "Server=127.0.0.1;Database=final;Uid=final;Pwd=final1234!;";
             MySqlConnection connection = new MySqlConnection(connectionString);
@@ -45,7 +35,7 @@ namespace final
                 connection.Open();
 
                 // 쿼리 생성
-                string query = $"SELECT * FROM {tableName}";
+                string query = $"SELECT * FROM pcb";
 
                 MySqlCommand cmd = new MySqlCommand(query, connection);
 
@@ -55,7 +45,7 @@ namespace final
                     while (reader.Read())
                     {
                         // 조회된 데이터 그리드 뷰에 추가
-                        ware_grid.Rows.Add(reader["lot"], reader["type"], reader["num"], reader["date"]);
+                        gridView.Rows.Add(reader["lot"], reader["type"], reader["num"], reader["date"]);
                     }
                 }
             }
@@ -69,12 +59,11 @@ namespace final
             }
         }
 
-        // 검색 버튼 클릭 이벤트 핸들러
         private void askBt_Click(object sender, EventArgs e)
         {
             // 사용자 입력 가져오기
             int lot;
-            if(int.TryParse(lotTxt.Text,out lot))
+            if (int.TryParse(lotTxt.Text, out lot))
             {
                 Console.WriteLine("성공");
             }
@@ -83,16 +72,13 @@ namespace final
                 Console.WriteLine("실패");
             }
             string type = typeCom.SelectedItem?.ToString();
-            string date = dateTimePicker1.Value.ToString("yyyy-MM-dd");
-
-            // 데이터 그리드 뷰에 검색 결과 표시
-            AskGrid(lot, type, date);
+            AskGrid(lot, type);
         }
 
         // 특정 조건으로 데이터 그리드 뷰를 필터링하는 메서드
-        public void AskGrid(int lot, string type, string date)
+        public void AskGrid(int lot, string type)
         {
-            ware_grid.Rows.Clear(); // 데이터 그리드 뷰 초기화
+            gridView.Rows.Clear(); // 데이터 그리드 뷰 초기화
 
             string connectionString = "Server=127.0.0.1;Database=final;Uid=final;Pwd=final1234!;";
             MySqlConnection connection = new MySqlConnection(connectionString);
@@ -102,14 +88,12 @@ namespace final
                 connection.Open();
 
                 // 쿼리 생성
-                string query = $"SELECT * FROM {currentTable} WHERE 1=1";
+                string query = $"SELECT * FROM pcb WHERE 1=1";
 
                 if (lot != 0)
                     query += $" AND lot={lot}";
                 if (!string.IsNullOrEmpty(type))
                     query += $" AND type='{type}'";
-                if (!string.IsNullOrEmpty(date))
-                    query += $" AND date='{date}'";
 
                 MySqlCommand cmd = new MySqlCommand(query, connection);
 
@@ -119,7 +103,7 @@ namespace final
                     while (reader.Read())
                     {
                         // 조회된 데이터 그리드 뷰에 추가
-                        ware_grid.Rows.Add(reader["lot"], reader["type"], reader["num"], reader["date"]);
+                        gridView.Rows.Add(reader["lot"], reader["type"], reader["num"], reader["date"]);
                     }
                 }
             }
@@ -132,6 +116,27 @@ namespace final
                 connection.Close();
             }
         }
-    }
 
+        private void gridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            lotTxt.Text = gridView.CurrentRow.Cells[0].Value.ToString();
+            typeCom.Text = gridView.CurrentRow.Cells[1].Value.ToString();
+        }
+
+        private void okBt_Click(object sender, EventArgs e)
+        {
+            if (String.IsNullOrEmpty(lotTxt.Text) || String.IsNullOrEmpty(typeCom.Text))
+            {
+                MessageBox.Show("칩을 선택하세요");
+            }
+            else
+            {
+                storage.pcb = lotTxt.Text;
+                choose choose = new choose();
+                choose.Show();
+                this.Close();
+            }
+
+        }
+    }
 }

@@ -130,6 +130,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="chip.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="chip.Designer.cs">
+      <DependentUpon>chip.cs</DependentUpon>
+    </Compile>
+    <Compile Include="choose.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="choose.Designer.cs">
+      <DependentUpon>choose.cs</DependentUpon>
+    </Compile>
     <Compile Include="login.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -148,11 +160,23 @@
     <Compile Include="manage.Designer.cs">
       <DependentUpon>manage.cs</DependentUpon>
     </Compile>
+    <Compile Include="mold.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mold.Designer.cs">
+      <DependentUpon>mold.cs</DependentUpon>
+    </Compile>
     <Compile Include="Navigation.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Navigation.Designer.cs">
       <DependentUpon>Navigation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="pcb.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="pcb.Designer.cs">
+      <DependentUpon>pcb.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -162,18 +186,19 @@
     <Compile Include="product.Designer.cs">
       <DependentUpon>product.cs</DependentUpon>
     </Compile>
-    <Compile Include="stats.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="stats.Designer.cs">
-      <DependentUpon>stats.cs</DependentUpon>
-    </Compile>
+    <Compile Include="storage.cs" />
     <Compile Include="warehouse.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="warehouse.Designer.cs">
       <DependentUpon>warehouse.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="chip.resx">
+      <DependentUpon>chip.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="choose.resx">
+      <DependentUpon>choose.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="login.resx">
       <DependentUpon>login.cs</DependentUpon>
     </EmbeddedResource>
@@ -183,8 +208,14 @@
     <EmbeddedResource Include="manage.resx">
       <DependentUpon>manage.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="mold.resx">
+      <DependentUpon>mold.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Navigation.resx">
       <DependentUpon>Navigation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="pcb.resx">
+      <DependentUpon>pcb.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -198,9 +229,6 @@
     </Compile>
     <EmbeddedResource Include="product.resx">
       <DependentUpon>product.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="stats.resx">
-      <DependentUpon>stats.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="warehouse.resx">
       <DependentUpon>warehouse.cs</DependentUpon>

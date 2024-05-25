@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ActUtlTypeLib;
+using MySql.Data.MySqlClient;
 namespace final
 {
     public partial class product : UserControl
@@ -46,6 +47,11 @@ namespace final
         int yellow;
         int green;
 
+        string chip_lot = storage.chip;
+        string pcb_lot = storage.pcb;
+        string mold_lot = storage.mold;
+
+
         PictureBox process;
         PictureBox pcb;
 
@@ -54,7 +60,7 @@ namespace final
             InitializeComponent();
             InitializeTimer();
 
-            plc.ActLogicalStationNumber = 1;    // PLC 논리 스테이션 번호 설정
+            plc.ActLogicalStationNumber = 3;    // PLC 논리 스테이션 번호 설정
 
             process =new PictureBox();
             process.Image = Properties.Resources.process;
@@ -62,6 +68,8 @@ namespace final
             process.Anchor = AnchorStyles.None;
             process.Size = new Size(800, 300);
             tablePanel.Controls.Add(process,1,1);
+
+
 
             Picture_pcb();
 
@@ -93,7 +101,11 @@ namespace final
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            pcb.Left -= pcbSpeed;
+            if (con == 1)
+            {
+                pcb.Left -= pcbSpeed;
+            }
+
 
             plc.GetDevice("X26", out chip);
             plc.GetDevice("X27", out vision);
@@ -116,9 +128,122 @@ namespace final
 
             sensor();
             output();
+            text();
+        }
+        private void text()
+        {
+
+            if (!string.IsNullOrEmpty(chip_lot) && !string.IsNullOrEmpty(pcb_lot) && !string.IsNullOrEmpty(mold_lot))
+            {
+                string chip_num = chipNum(int.Parse(chip_lot));
+                string pcb_num=pcbNum(int.Parse(pcb_lot));
+                string mold_num=moldNum(int.Parse(mold_lot));
+
+                mysql_chip.Text = "lot : "+chip_lot +", num : "+ chip_num+"개";
+                mysql_pcb.Text = "lot : "+pcb_lot +", num :  "+pcb_num+"개";
+                mysql_mold.Text = "lot : " + mold_lot + ", num : "+mold_num+"개";
+            }
 
         }
+        private string chipNum(int chip)
+        {
+            string connectionString = "Server=127.0.0.1;Database=final;Uid=final;Pwd=final1234!;";
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            string num="";
+            try
+            {
+                connection.Open();
 
+                // 쿼리 생성
+                string query = $"SELECT * FROM chip WHERE lot={chip}";
+
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+
+                // 쿼리 실행
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        num = reader["num"].ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return num;
+        }
+        private string pcbNum(int pcb)
+        {
+            string connectionString = "Server=127.0.0.1;Database=final;Uid=final;Pwd=final1234!;";
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            string num = "";
+            try
+            {
+                connection.Open();
+
+                // 쿼리 생성
+                string query = $"SELECT * FROM pcb WHERE lot={pcb}";
+
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+
+                // 쿼리 실행
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        num = reader["num"].ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return num;
+        }
+        private string moldNum(int mold)
+        {
+            string connectionString = "Server=127.0.0.1;Database=final;Uid=final;Pwd=final1234!;";
+            MySqlConnection connection = new MySqlConnection(connectionString);
+            string num = "";
+            try
+            {
+                connection.Open();
+
+                // 쿼리 생성
+                string query = $"SELECT * FROM mold WHERE lot={mold}";
+
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+
+                // 쿼리 실행
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        num = reader["num"].ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return num;
+        }
         private void sensor()
         {
             if(chip==1) chip_sensor.BackColor = Color.Red;
@@ -210,6 +335,10 @@ namespace final
                 statLb.Text = "연결성공";
 
             }
+            else if (open == 1)
+            {
+                statLb.Text = "연결실패";
+            }
 
         }
 
@@ -225,7 +354,7 @@ namespace final
 
         private void conStartBt_Click(object sender, EventArgs e)
         {
-            plc.SetDevice("M8185", 1);
+            plc.SetDevice("M76", 1);
             plc.GetDevice("Y30",out con);
 
             if (con == 1)
@@ -239,57 +368,57 @@ namespace final
 
         private void conStopBt_Click(object sender, EventArgs e)
         {
-            plc.SetDevice("M8185", 0);
+            plc.SetDevice("M76", 0);
 
         }
 
 
         private void attachUp_Click(object sender, EventArgs e)
         {
-            plc.SetDevice("M8186", 1);
+            plc.SetDevice("M70", 1);
             attach_lb.Text = "칩셋 업";
         }
 
         private void attachDown_Click(object sender, EventArgs e)
         {
-            plc.SetDevice("M8186", 0);
+            plc.SetDevice("M70", 0);
             attach_lb.Text = "칩셋 다운";
         }
 
         private void visionUp_Click(object sender, EventArgs e)
         {
-            plc.SetDevice("M8179", 1);
+            plc.SetDevice("M71", 1);
             vision_lb.Text = "비전 업";
         }
 
         private void visionDown_Click(object sender, EventArgs e)
         {
-            plc.SetDevice("M8179", 0);
+            plc.SetDevice("M71", 0);
             vision_lb.Text = "비전 다운";
         }
 
         private void moldUp_Click(object sender, EventArgs e)
         {
-            plc.SetDevice("M8168", 1);
+            plc.SetDevice("M72", 1);
             mold_lb.Text = "몰드 업";
         }
 
         private void moldDown_Click(object sender, EventArgs e)
         {
-            plc.SetDevice("M8168", 0);
+            plc.SetDevice("M72", 0);
             mold_lb.Text = "몰드 다운";
         }
 
         private void pcb_up_Click(object sender, EventArgs e)
         {
-            plc.SetDevice("M8182", 1);
-            plc.SetDevice("M8181", 0);
+            plc.SetDevice("M73", 1);
+            plc.SetDevice("M74", 0);
         }
 
         private void pcb_down_Click(object sender, EventArgs e)
         {
-            plc.SetDevice("M8182", 0);
-            plc.SetDevice("M8181", 1);
+            plc.SetDevice("M73", 0);
+            plc.SetDevice("M74", 1);
         }
 
         private void ware_down_Click(object sender, EventArgs e)
@@ -314,37 +443,42 @@ namespace final
 
         private void mware_up_Click(object sender, EventArgs e)
         {
-            plc.SetDevice("M8165", 1);
+            plc.SetDevice("M75", 1);
 
         }
 
         private void mware_down_Click(object sender, EventArgs e)
         {
-            plc.SetDevice("M8165", 0);
+            plc.SetDevice("M75", 0);
         }
 
         private void RED_Click(object sender, EventArgs e)
         {
-            plc.SetDevice("M8172", 1);
-            plc.SetDevice("M8170", 0);
-            plc.SetDevice("M8169", 0);
+            plc.SetDevice("M81", 1);
+            plc.SetDevice("M82", 0);
+            plc.SetDevice("M83", 0);
         }
 
         private void YEL_Click(object sender, EventArgs e)
         {
-            plc.SetDevice("M8172", 0);
-            plc.SetDevice("M8170", 1);
-            plc.SetDevice("M8169", 0);
+            plc.SetDevice("M81", 0);
+            plc.SetDevice("M82", 1);
+            plc.SetDevice("M83", 0);
         }
 
         private void GRN_Click(object sender, EventArgs e)
         {
-            plc.SetDevice("M8172", 0);
-            plc.SetDevice("M8170", 0);
-            plc.SetDevice("M8169", 1);
+            plc.SetDevice("M81", 0);
+            plc.SetDevice("M82", 0);
+            plc.SetDevice("M83", 1);
 
         }
-
+        private void STOP_Click(object sender, EventArgs e)
+        {
+            plc.SetDevice("M81", 0);
+            plc.SetDevice("M82", 0);
+            plc.SetDevice("M83", 0);
+        }
         private void FLS_MouseDown(object sender, MouseEventArgs e)
         {
 
@@ -363,12 +497,7 @@ namespace final
 
         }
 
-        private void STOP_Click(object sender, EventArgs e)
-        {
-            plc.SetDevice("M8172", 0);
-            plc.SetDevice("M8170", 0);
-            plc.SetDevice("M8169", 0);
-        }
+
         int preValue;
         private void hScrollBar1_Scroll(object sender, ScrollEventArgs e)
         {
@@ -389,6 +518,63 @@ namespace final
 
             // 새로운 값을 preValue에 저장합니다.
             preValue = newValue;
+        }
+
+        private void DOG_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void onBt_Click(object sender, EventArgs e)
+        {
+            plc.SetDevice("M80", 1);
+        }
+
+        private void offBt_Click(object sender, EventArgs e)
+        {
+            plc.SetDevice("M80", 0);
+        }
+
+        private void finish_Click(object sender, EventArgs e)
+        {
+            plc.SetDevice("M115", 1);
+        }
+
+        private void Lstart_Click(object sender, EventArgs e)
+        {
+            choose choice = new choose();
+            choice.Show();
+
+            if (!string.IsNullOrEmpty(chip_lot) && !string.IsNullOrEmpty(pcb_lot) && !string.IsNullOrEmpty(mold_lot))
+            {
+                plc.SetDevice("M90", 1);
+                plc.SetDevice("M8187", 1);
+            }
+
+        }
+
+        private void Adobot_MouseDown(object sender, MouseEventArgs e)
+        {
+            plc.SetDevice("M84", 1);
+            Adobot.MouseUp += delegate (object sender1, MouseEventArgs e1)
+            {
+                plc.SetDevice("M84", 0);
+            };
+        }
+
+        private void Mdobot_MouseDown(object sender, MouseEventArgs e)
+        {
+            plc.SetDevice("M85", 1);
+            Mdobot.MouseUp += delegate (object sender1, MouseEventArgs e1)
+            {
+                plc.SetDevice("M85", 0);
+            };
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            choose choice = new choose();
+            choice.Show();
         }
     }
 }

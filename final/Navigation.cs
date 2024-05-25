@@ -20,7 +20,6 @@ namespace final
         warehouse ware;
         main main;
         product product;
-        stats stats;
         manage manage;
 
         public Navigation()
@@ -131,14 +130,6 @@ namespace final
             panel1.Controls.Add(manage);
             manage.Dock = DockStyle.Fill;
             
-        }
-
-        private void statisBt_Click(object sender, EventArgs e)
-        {
-            panel1.Controls.Clear();
-            stats = new stats();
-            panel1.Controls.Add(stats);
-            stats.Dock = DockStyle.Fill;
         }
 
     }
