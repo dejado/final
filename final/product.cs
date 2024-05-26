@@ -16,7 +16,7 @@ namespace final
         ActUtlType plc = new ActUtlType();
         int open;
         int close;
-        int pcbSpeed = 10;   //pcb 이동속도
+        int pcbSpeed = 5;   //pcb 이동속도
 
         int chip;
         int vision;
@@ -132,7 +132,7 @@ namespace final
             }
             else
             {
-                pcbSpeed = 10;
+                pcbSpeed = 5;
             }
 
             sensor();

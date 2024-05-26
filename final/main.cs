@@ -24,7 +24,8 @@ namespace final
             InitializeComponent();
             AddCalendar();
             ShowGrid();
-
+            ProductChart();
+            BadChart();
         }
         private void AddCalendar()
         {
@@ -101,25 +102,23 @@ namespace final
 
         private void main_Load(object sender, EventArgs e)
         {
-            BadChart();
+
 
 
         }
         private void ProductChart()
         {
-            List<DateTime> date = new List<DateTime>();
-            List<int> result=new List<int>();
+            Dictionary<string, int> goodCounts = new Dictionary<string, int>();
+            Dictionary<string, int> badCounts = new Dictionary<string, int>();
             string connectionString = "Server=127.0.0.1;Database=final;Uid=final;Pwd=final1234!;";
             MySqlConnection connection = new MySqlConnection(connectionString);
-            int good = 0;
-            int bad = 0;
+
             try
             {
                 connection.Open();
 
-                // 쿼리 생성
-                string query = $"SELECT * FROM result";
-
+                // 데이터를 가져오기 위한 쿼리
+                string query = "SELECT date, type FROM result";
                 MySqlCommand cmd = new MySqlCommand(query, connection);
 
                 // 쿼리 실행
@@ -127,47 +126,41 @@ namespace final
                 {
                     while (reader.Read())
                     {
-                        DateTime Check_date = (DateTime)reader["date"];
-                        int check = 0;
-                        if (date == null && date.Count < 0)
+                        DateTime checkDate = (DateTime)reader["date"];
+                        string dateKey = checkDate.ToString("yyyy-MM-dd"); // 날짜를 문자열로 변환하여 키로 사용
+
+                        // 사전에 키가 있는지 확인하고, 없으면 새 항목 추가
+                        if (!goodCounts.ContainsKey(dateKey))
                         {
-                            date.Add(Check_date);
+                            goodCounts[dateKey] = 0;
+                        }
+                        if (!badCounts.ContainsKey(dateKey))
+                        {
+                            badCounts[dateKey] = 0;
+                        }
+
+                        // 제품 유형에 따라 카운트 증가
+                        if ((string)reader["type"] == "양품")
+                        {
+                            goodCounts[dateKey]++;
                         }
                         else
                         {
-                            for(int i=0; i<date.Count; i++)
-                            {
-                                if (date[i] != Check_date)
-                                {
-                                    check = 1;
-                                }
-                            }
-                            if (check == 0)
-                            {
-                                date.Add(Check_date);
-                            }
-                        }
-                        switch (reader["type"])
-                        {
-                            case "GOOD":
-                                good++;
-                                break;
-                            case "BAD1":
-                                bad++;
-                                break;
-                            case "BAD2":
-                                bad++;
-                                break;
-                            case "BAD3":
-                                bad++;
-                                break;
+                            badCounts[dateKey]++;
                         }
                     }
-                        
                 }
-                for (int i = 0; i < date.Count; i++)
+
+                // 차트에 데이터 추가
+                foreach (var kvp in goodCounts)
                 {
-                    bad_chart.Series[0].Points.AddXY(date[i], result[i]);
+                    string date = kvp.Key;
+                    int goodCount = kvp.Value;
+                    int badCount = badCounts.ContainsKey(date) ? badCounts[date] : 0;
+
+                    // 각 날짜별로 좋은 제품과 나쁜 제품의 개수를 차트에 추가
+                    product_chart.Series[0].Points.AddXY(date, goodCount);
+                    product_chart.Series[1].Points.AddXY(date, badCount);
                 }
             }
             catch (Exception ex)
@@ -179,11 +172,12 @@ namespace final
                 connection.Close();
             }
         }
+
+
         private void BadChart()
         {
             int bad1 = 0;
             int bad2 = 0;
-            int bad3 = 0;
 
             string connectionString = "Server=127.0.0.1;Database=final;Uid=final;Pwd=final1234!;";
             MySqlConnection connection = new MySqlConnection(connectionString);
@@ -203,21 +197,21 @@ namespace final
                     {
                         switch (reader["type"])
                         {
-                            case "BAD1":
+                            case "양품":
                                 bad1++;
                                 break;
-                            case "BAD2":
-                                bad2++;
+                            case "웨이퍼 작업 불량":
+                                bad1++;
                                 break;
-                            case "BAD3":
-                                bad3++;
+                            case "칩 없음":
+                                bad2++;
                                 break;
 
                         }
                     }
                 }
-                string[] type = new string[] { "bad1", "bad2", "bad3" };
-                int[] bad = new int[] { bad1, bad2, bad3 };
+                string[] type = new string[] { "bad1", "bad2"};
+                int[] bad = new int[] { bad1, bad2};
                 for (int i = 0; i < type.Length; i++)
                 {
                     bad_chart.Series[0].Points.AddXY(type[i], bad[i]);
