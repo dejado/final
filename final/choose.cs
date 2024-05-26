@@ -13,13 +13,16 @@ namespace final
 {
     public partial class choose : Form
     {
+        string chip;
+        string pcb;
+        string mold;
         public choose()
         {
             InitializeComponent();
 
-            string chip= storage.chip;
-            string pcb= storage.pcb;
-            string mold= storage.mold;
+            chip= storage.chip;
+            pcb= storage.pcb;
+            mold= storage.mold;
 
             if( !string.IsNullOrEmpty(chip))
             {
@@ -60,6 +63,10 @@ namespace final
             mold.Show();
             this.Close();
         }
+        private void okBt_MouseDown(object sender, MouseEventArgs e)
+        {
+
+        }
 
         private void okBt_Click(object sender, EventArgs e)
         {
@@ -69,16 +76,25 @@ namespace final
             int open = plc.Open();
             if (open == 0)
             {
-                plc.SetDevice("M90", 1);
-                plc.SetDevice("M8191", 1);
-                plc.SetDevice("M8187", 0);
+                if (!string.IsNullOrEmpty(chip) && !string.IsNullOrEmpty(pcb) && !string.IsNullOrEmpty(mold))
+                {
+                    plc.SetDevice("M90", 1);
+                    plc.SetDevice("M8191", 1);
+                }
 
             }
             else if (open == 1)
             {
                 MessageBox.Show("연결실패");
             }
+            plc.GetDevice("M8190", out int start);
+            if (start == 1)
+            {
+                plc.SetDevice("M90", 0);
+                plc.SetDevice("M8191", 0);
+            }
 
+            
             this.Close();
         }
     }

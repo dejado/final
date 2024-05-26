@@ -149,6 +149,7 @@
             this.okBt.Text = "확인";
             this.okBt.UseVisualStyleBackColor = true;
             this.okBt.Click += new System.EventHandler(this.okBt_Click);
+            this.okBt.MouseDown += new System.Windows.Forms.MouseEventHandler(this.okBt_MouseDown);
             // 
             // choose
             // 

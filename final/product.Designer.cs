@@ -32,6 +32,8 @@
             this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.label12 = new System.Windows.Forms.Label();
             this.offBt = new System.Windows.Forms.Button();
@@ -112,9 +114,6 @@
             this.moldDobot_run = new System.Windows.Forms.Button();
             this.attachDobot_run = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
-            this.pcbdown_run = new System.Windows.Forms.Button();
-            this.pcbup_run = new System.Windows.Forms.Button();
-            this.label8 = new System.Windows.Forms.Label();
             this.vision_run = new System.Windows.Forms.Button();
             this.mold_run = new System.Windows.Forms.Button();
             this.chip_run = new System.Windows.Forms.Button();
@@ -129,8 +128,9 @@
             this.mysql_chip = new System.Windows.Forms.Label();
             this.mysql_pcb = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.psignal_down = new System.Windows.Forms.Button();
+            this.psignal_up = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
             this.groupBox7.SuspendLayout();
             this.panel3.SuspendLayout();
             this.groupBox10.SuspendLayout();
@@ -178,6 +178,25 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(1714, 318);
             this.panel3.TabIndex = 21;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(1084, 288);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 28;
+            this.button2.Text = "button2";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(967, 288);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 27;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // groupBox10
             // 
@@ -323,7 +342,7 @@
             this.finish.TabIndex = 1;
             this.finish.Text = "종료";
             this.finish.UseVisualStyleBackColor = true;
-            this.finish.Click += new System.EventHandler(this.finish_Click);
+            this.finish.MouseDown += new System.Windows.Forms.MouseEventHandler(this.finish_MouseDown);
             // 
             // groupBox8
             // 
@@ -999,6 +1018,9 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.psignal_down);
+            this.panel2.Controls.Add(this.psignal_up);
+            this.panel2.Controls.Add(this.label8);
             this.panel2.Controls.Add(this.grn_run);
             this.panel2.Controls.Add(this.yel_run);
             this.panel2.Controls.Add(this.red_run);
@@ -1006,9 +1028,6 @@
             this.panel2.Controls.Add(this.moldDobot_run);
             this.panel2.Controls.Add(this.attachDobot_run);
             this.panel2.Controls.Add(this.label9);
-            this.panel2.Controls.Add(this.pcbdown_run);
-            this.panel2.Controls.Add(this.pcbup_run);
-            this.panel2.Controls.Add(this.label8);
             this.panel2.Controls.Add(this.vision_run);
             this.panel2.Controls.Add(this.mold_run);
             this.panel2.Controls.Add(this.chip_run);
@@ -1026,7 +1045,7 @@
             this.grn_run.AutoSize = true;
             this.grn_run.Dock = System.Windows.Forms.DockStyle.Top;
             this.grn_run.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.grn_run.Location = new System.Drawing.Point(0, 390);
+            this.grn_run.Location = new System.Drawing.Point(0, 312);
             this.grn_run.Name = "grn_run";
             this.grn_run.Size = new System.Drawing.Size(166, 28);
             this.grn_run.TabIndex = 18;
@@ -1038,7 +1057,7 @@
             this.yel_run.AutoSize = true;
             this.yel_run.Dock = System.Windows.Forms.DockStyle.Top;
             this.yel_run.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.yel_run.Location = new System.Drawing.Point(0, 362);
+            this.yel_run.Location = new System.Drawing.Point(0, 284);
             this.yel_run.Name = "yel_run";
             this.yel_run.Size = new System.Drawing.Size(166, 28);
             this.yel_run.TabIndex = 17;
@@ -1050,7 +1069,7 @@
             this.red_run.AutoSize = true;
             this.red_run.Dock = System.Windows.Forms.DockStyle.Top;
             this.red_run.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.red_run.Location = new System.Drawing.Point(0, 334);
+            this.red_run.Location = new System.Drawing.Point(0, 256);
             this.red_run.Name = "red_run";
             this.red_run.Size = new System.Drawing.Size(166, 28);
             this.red_run.TabIndex = 16;
@@ -1063,7 +1082,7 @@
             this.label10.Dock = System.Windows.Forms.DockStyle.Top;
             this.label10.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.label10.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label10.Location = new System.Drawing.Point(0, 312);
+            this.label10.Location = new System.Drawing.Point(0, 234);
             this.label10.Margin = new System.Windows.Forms.Padding(0);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(166, 22);
@@ -1076,7 +1095,7 @@
             this.moldDobot_run.AutoSize = true;
             this.moldDobot_run.Dock = System.Windows.Forms.DockStyle.Top;
             this.moldDobot_run.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.moldDobot_run.Location = new System.Drawing.Point(0, 284);
+            this.moldDobot_run.Location = new System.Drawing.Point(0, 206);
             this.moldDobot_run.Name = "moldDobot_run";
             this.moldDobot_run.Size = new System.Drawing.Size(166, 28);
             this.moldDobot_run.TabIndex = 14;
@@ -1088,7 +1107,7 @@
             this.attachDobot_run.AutoSize = true;
             this.attachDobot_run.Dock = System.Windows.Forms.DockStyle.Top;
             this.attachDobot_run.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.attachDobot_run.Location = new System.Drawing.Point(0, 256);
+            this.attachDobot_run.Location = new System.Drawing.Point(0, 178);
             this.attachDobot_run.Name = "attachDobot_run";
             this.attachDobot_run.Size = new System.Drawing.Size(166, 28);
             this.attachDobot_run.TabIndex = 13;
@@ -1101,51 +1120,13 @@
             this.label9.Dock = System.Windows.Forms.DockStyle.Top;
             this.label9.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.label9.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label9.Location = new System.Drawing.Point(0, 234);
+            this.label9.Location = new System.Drawing.Point(0, 156);
             this.label9.Margin = new System.Windows.Forms.Padding(0);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(166, 22);
             this.label9.TabIndex = 12;
             this.label9.Text = "두봇 동작 신호";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // pcbdown_run
-            // 
-            this.pcbdown_run.AutoSize = true;
-            this.pcbdown_run.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pcbdown_run.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.pcbdown_run.Location = new System.Drawing.Point(0, 206);
-            this.pcbdown_run.Name = "pcbdown_run";
-            this.pcbdown_run.Size = new System.Drawing.Size(166, 28);
-            this.pcbdown_run.TabIndex = 11;
-            this.pcbdown_run.Text = "pcb 후진";
-            this.pcbdown_run.UseVisualStyleBackColor = true;
-            // 
-            // pcbup_run
-            // 
-            this.pcbup_run.AutoSize = true;
-            this.pcbup_run.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pcbup_run.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.pcbup_run.Location = new System.Drawing.Point(0, 178);
-            this.pcbup_run.Name = "pcbup_run";
-            this.pcbup_run.Size = new System.Drawing.Size(166, 28);
-            this.pcbup_run.TabIndex = 10;
-            this.pcbup_run.Text = "pcb 전진";
-            this.pcbup_run.UseVisualStyleBackColor = true;
-            // 
-            // label8
-            // 
-            this.label8.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label8.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label8.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.label8.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label8.Location = new System.Drawing.Point(0, 156);
-            this.label8.Margin = new System.Windows.Forms.Padding(0);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(166, 22);
-            this.label8.TabIndex = 9;
-            this.label8.Text = "pcb 투입";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // vision_run
             // 
@@ -1302,25 +1283,43 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // button1
+            // psignal_down
             // 
-            this.button1.Location = new System.Drawing.Point(967, 288);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 27;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.psignal_down.AutoSize = true;
+            this.psignal_down.Dock = System.Windows.Forms.DockStyle.Top;
+            this.psignal_down.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.psignal_down.Location = new System.Drawing.Point(0, 390);
+            this.psignal_down.Name = "psignal_down";
+            this.psignal_down.Size = new System.Drawing.Size(166, 28);
+            this.psignal_down.TabIndex = 22;
+            this.psignal_down.Text = "pcb 후진 신호";
+            this.psignal_down.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // psignal_up
             // 
-            this.button2.Location = new System.Drawing.Point(1084, 288);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 28;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.psignal_up.AutoSize = true;
+            this.psignal_up.Dock = System.Windows.Forms.DockStyle.Top;
+            this.psignal_up.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.psignal_up.Location = new System.Drawing.Point(0, 362);
+            this.psignal_up.Name = "psignal_up";
+            this.psignal_up.Size = new System.Drawing.Size(166, 28);
+            this.psignal_up.TabIndex = 21;
+            this.psignal_up.Text = "pcb 전진 신호";
+            this.psignal_up.UseVisualStyleBackColor = true;
+            // 
+            // label8
+            // 
+            this.label8.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.label8.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label8.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.label8.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label8.Location = new System.Drawing.Point(0, 340);
+            this.label8.Margin = new System.Windows.Forms.Padding(0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(166, 22);
+            this.label8.TabIndex = 20;
+            this.label8.Text = "pcb 실린더 신호";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // product
             // 
@@ -1389,9 +1388,6 @@
         private System.Windows.Forms.Button moldDobot_run;
         private System.Windows.Forms.Button attachDobot_run;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Button pcbdown_run;
-        private System.Windows.Forms.Button pcbup_run;
-        private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button vision_run;
         private System.Windows.Forms.Button mold_run;
         private System.Windows.Forms.Button chip_run;
@@ -1463,5 +1459,8 @@
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button psignal_down;
+        private System.Windows.Forms.Button psignal_up;
+        private System.Windows.Forms.Label label8;
     }
 }

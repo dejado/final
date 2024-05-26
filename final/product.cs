@@ -29,6 +29,9 @@ namespace final
         int moldWare_down;
         int pcbWare_up;
 
+        int pcb_out;
+        int pcb_in;
+
         int attach_finish;
         int mold_finish;
 
@@ -101,6 +104,9 @@ namespace final
             // 타이머 시작
             timer1.Start();
         }
+        bool attachUpdateDone = false;
+        bool pcbUpdateDone = false;
+        bool moldUpdateDone = false;
 
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -132,6 +138,39 @@ namespace final
             sensor();
             output();
             text();
+
+            if (attach_start == 1 && !string.IsNullOrEmpty(chip_lot) && !attachUpdateDone)
+            {
+                chipUpdate(chip_lot, chip_num);
+                attachUpdateDone = true;
+            }
+
+            if (attach_start == 0)
+            {
+                attachUpdateDone = false; // 다시 업데이트 가능하도록 설정
+            }
+
+            if (pcb_in == 1 && !string.IsNullOrEmpty(pcb_lot) && !pcbUpdateDone)
+            {
+                pcbUpdate(pcb_lot, pcb_num);
+                pcbUpdateDone = true;
+            }
+
+            if (pcb_in == 0)
+            {
+                pcbUpdateDone = false; // 다시 업데이트 가능하도록 설정
+            }
+
+            if (mold_start == 1 && !string.IsNullOrEmpty(mold_lot) && !moldUpdateDone)
+            {
+                moldUpdate(mold_lot, mold_num);
+                moldUpdateDone = true;
+            }
+
+            if (mold_start == 0)
+            {
+                moldUpdateDone = false; // 다시 업데이트 가능하도록 설정
+            }
         }
         private void text()
         {
@@ -274,17 +313,8 @@ namespace final
             string connectionString = "Server=127.0.0.1;Database=final;Uid=final;Pwd=final1234!;";
             MySqlConnection connection = new MySqlConnection(connectionString);
 
-            if (!int.TryParse(chip, out int lot))
-            {
-                MessageBox.Show("chip_num 값이 유효한 정수가 아닙니다.");
-                return;
-            }
-
-            if (!int.TryParse(chip_num, out int num))
-            {
-                MessageBox.Show("chip_num 값이 유효한 정수가 아닙니다.");
-                return;
-            }
+            int.TryParse(chip, out int lot);
+            int.TryParse(chip_num, out int num);
 
             // Decrement num
             num -= 1;
@@ -314,11 +344,7 @@ namespace final
 
                     // 쿼리 실행
                     int rowsAffected = cmd.ExecuteNonQuery();
-                    if (rowsAffected > 0)
-                    {
-                        MessageBox.Show("업데이트 성공");
-                    }
-                    else
+                    if (rowsAffected <= 0)
                     {
                         MessageBox.Show("업데이트 실패");
                     }
@@ -338,17 +364,9 @@ namespace final
             string connectionString = "Server=127.0.0.1;Database=final;Uid=final;Pwd=final1234!;";
             MySqlConnection connection = new MySqlConnection(connectionString);
 
-            if (!int.TryParse(pcb, out int lot))
-            {
-                MessageBox.Show("pcb_num 값이 유효한 정수가 아닙니다.");
-                return;
-            }
+            int.TryParse(pcb, out int lot);
+            int.TryParse(pcb_num, out int num);
 
-            if (!int.TryParse(pcb_num, out int num))
-            {
-                MessageBox.Show("pcb_num 값이 유효한 정수가 아닙니다.");
-                return;
-            }
 
             // Decrement num
             num -= 1;
@@ -378,11 +396,7 @@ namespace final
 
                     // 쿼리 실행
                     int rowsAffected = cmd.ExecuteNonQuery();
-                    if (rowsAffected > 0)
-                    {
-                        MessageBox.Show("업데이트 성공");
-                    }
-                    else
+                    if (rowsAffected <= 0)
                     {
                         MessageBox.Show("업데이트 실패");
                     }
@@ -402,17 +416,9 @@ namespace final
             string connectionString = "Server=127.0.0.1;Database=final;Uid=final;Pwd=final1234!;";
             MySqlConnection connection = new MySqlConnection(connectionString);
 
-            if (!int.TryParse(mold, out int lot))
-            {
-                MessageBox.Show("mold_num 값이 유효한 정수가 아닙니다.");
-                return;
-            }
+            int.TryParse(mold, out int lot);
 
-            if (!int.TryParse(mold_num, out int num))
-            {
-                MessageBox.Show("mold_num 값이 유효한 정수가 아닙니다.");
-                return;
-            }
+            int.TryParse(mold_num, out int num);
 
             // Decrement num
             num -= 1;
@@ -442,14 +448,11 @@ namespace final
 
                     // 쿼리 실행
                     int rowsAffected = cmd.ExecuteNonQuery();
-                    if (rowsAffected > 0)
-                    {
-                        MessageBox.Show("업데이트 성공");
-                    }
-                    else
+                    if (rowsAffected <= 0)
                     {
                         MessageBox.Show("업데이트 실패");
                     }
+
                 }
             }
             catch (Exception ex)
@@ -514,6 +517,7 @@ namespace final
             plc.GetDevice("Y34", out mold_out);
             plc.GetDevice("Y33", out vision_out);
 
+
             if (con == 1) { con_run.BackColor = Color.Red; }
             else { con_run.BackColor = Color.White; }
             if (chip_out == 1) { chip_run.BackColor = Color.Red; }
@@ -523,7 +527,14 @@ namespace final
             if (vision_out==1) { vision_run.BackColor = Color.Red; }
             else { vision_run.BackColor = Color.White; }
 
-            plc.GetDevice("Y36", out attach_start);
+            plc.GetDevice("Y41", out pcb_in);
+            plc.GetDevice("Y42", out pcb_out);
+            if (pcb_in == 1) { psignal_up.BackColor = Color.Red; }
+            else { psignal_up.BackColor = Color.White; }
+            if (pcb_out == 1) { psignal_down.BackColor = Color.Red; }
+            else { psignal_down.BackColor = Color.White; }
+
+            plc.GetDevice("Y38", out attach_start);
             plc.GetDevice("Y39", out mold_start);
 
             if(attach_start == 1) { attachDobot_run.BackColor = Color.Red; }
@@ -752,13 +763,6 @@ namespace final
             plc.SetDevice("M80", 0);
         }
 
-        private void finish_Click(object sender, EventArgs e)
-        {
-            plc.SetDevice("M8187", 0);
-            plc.SetDevice("M90", 0);
-            plc.SetDevice("M8191", 1);
-        }
-
         private void Lstart_Click(object sender, EventArgs e)
         {
             choose choice = new choose();
@@ -784,18 +788,21 @@ namespace final
             };
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            choose choice = new choose();
-            choice.Show();
-        }
-
         private void button2_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(chip_num) && !string.IsNullOrEmpty(pcb_num) && !string.IsNullOrEmpty(mold_num))
             {
                 moldUpdate(mold_lot, mold_num);
             }
+        }
+
+        private void finish_MouseDown(object sender, MouseEventArgs e)
+        {
+            plc.SetDevice("M115", 1);
+            finish.MouseUp += delegate (object sender1, MouseEventArgs e1)
+            {
+                plc.SetDevice("M115", 0);
+            };
         }
     }
 }
