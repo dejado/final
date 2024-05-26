@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ActUtlTypeLib;
 
 namespace final
 {
@@ -62,6 +63,22 @@ namespace final
 
         private void okBt_Click(object sender, EventArgs e)
         {
+            ActUtlType plc = new ActUtlType();
+            plc.ActLogicalStationNumber = 3;    // PLC 논리 스테이션 번호 설정
+
+            int open = plc.Open();
+            if (open == 0)
+            {
+                plc.SetDevice("M90", 1);
+                plc.SetDevice("M8191", 1);
+                plc.SetDevice("M8187", 0);
+
+            }
+            else if (open == 1)
+            {
+                MessageBox.Show("연결실패");
+            }
+
             this.Close();
         }
     }

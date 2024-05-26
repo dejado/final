@@ -23,6 +23,7 @@ namespace final
         {
             InitializeComponent();
             AddCalendar();
+            ShowGrid();
 
         }
         private void AddCalendar()
@@ -40,6 +41,45 @@ namespace final
             };
             Calendar_cal.AddEvent(groundhogEvent);
         }
+
+        // 데이터 그리드 뷰에 테이블 내용을 표시하는 메서드
+        public void ShowGrid()
+        {
+
+            gridView.Rows.Clear(); // 데이터 그리드 뷰 초기화
+
+            string connectionString = "Server=127.0.0.1;Database=final;Uid=final;Pwd=final1234!;";
+            MySqlConnection connection = new MySqlConnection(connectionString);
+
+            try
+            {
+                connection.Open();
+
+                // 쿼리 생성
+                string query = $"SELECT * FROM result";
+
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+
+                // 쿼리 실행
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        // 조회된 데이터 그리드 뷰에 추가
+                        gridView.Rows.Add(reader["lot"], reader["type"], reader["num"], reader["date"]);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("MySQL 연결 실패: " + ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             /*string path = "rtsp://10.10.32.212:8554/mjpeg/1";

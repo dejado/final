@@ -63,7 +63,7 @@ namespace final
             InitializeComponent();
             InitializeTimer();
 
-            plc.ActLogicalStationNumber = 1;    // PLC 논리 스테이션 번호 설정
+            plc.ActLogicalStationNumber = 3;    // PLC 논리 스테이션 번호 설정
 
             process =new PictureBox();
             process.Image = Properties.Resources.process;
@@ -511,8 +511,8 @@ namespace final
         {
             plc.GetDevice("Y30", out con);
             plc.GetDevice("Y32", out chip_out);
-            plc.GetDevice("Y33", out mold_out);
-            plc.GetDevice("Y34", out vision_out);
+            plc.GetDevice("Y34", out mold_out);
+            plc.GetDevice("Y33", out vision_out);
 
             if (con == 1) { con_run.BackColor = Color.Red; }
             else { con_run.BackColor = Color.White; }
@@ -754,19 +754,15 @@ namespace final
 
         private void finish_Click(object sender, EventArgs e)
         {
-            plc.SetDevice("M8187", 1);
+            plc.SetDevice("M8187", 0);
+            plc.SetDevice("M90", 0);
+            plc.SetDevice("M8191", 1);
         }
 
         private void Lstart_Click(object sender, EventArgs e)
         {
             choose choice = new choose();
             choice.Show();
-            
-            if (!string.IsNullOrEmpty(chip_lot) && !string.IsNullOrEmpty(pcb_lot) && !string.IsNullOrEmpty(mold_lot))
-            {
-                plc.SetDevice("M90", 1);
-                plc.SetDevice("M8191", 1);
-            }
             
         }
 
