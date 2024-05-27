@@ -150,18 +150,35 @@ namespace final
                         }
                     }
                 }
-
-                // 차트에 데이터 추가
-                foreach (var kvp in goodCounts)
+                if(goodCounts.Count>=badCounts.Count)
                 {
-                    string date = kvp.Key;
-                    int goodCount = kvp.Value;
-                    int badCount = badCounts.ContainsKey(date) ? badCounts[date] : 0;
+                    // 차트에 데이터 추가
+                    foreach (var kvp in goodCounts)
+                    {
+                        string date = kvp.Key;
+                        int goodCount = kvp.Value;
+                        int badCount = badCounts.ContainsKey(date) ? badCounts[date] : 0;
 
-                    // 각 날짜별로 좋은 제품과 나쁜 제품의 개수를 차트에 추가
-                    product_chart.Series[0].Points.AddXY(date, goodCount);
-                    product_chart.Series[1].Points.AddXY(date, badCount);
+                        // 각 날짜별로 좋은 제품과 나쁜 제품의 개수를 차트에 추가
+                        product_chart.Series[0].Points.AddXY(date, goodCount);
+                        product_chart.Series[1].Points.AddXY(date, badCount);
+                    }
                 }
+                else
+                {
+                    // 차트에 데이터 추가
+                    foreach (var kvp in badCounts)
+                    {
+                        string date = kvp.Key;
+                        int badCount = kvp.Value;
+                        int goodCount = goodCounts.ContainsKey(date) ? goodCounts[date] : 0;
+
+                        // 각 날짜별로 좋은 제품과 나쁜 제품의 개수를 차트에 추가
+                        product_chart.Series[0].Points.AddXY(date, goodCount);
+                        product_chart.Series[1].Points.AddXY(date, badCount);
+                    }
+                }
+                
             }
             catch (Exception ex)
             {
@@ -178,6 +195,7 @@ namespace final
         {
             int bad1 = 0;
             int bad2 = 0;
+            int bad3 = 0;
 
             string connectionString = "Server=127.0.0.1;Database=final;Uid=final;Pwd=final1234!;";
             MySqlConnection connection = new MySqlConnection(connectionString);
@@ -200,18 +218,21 @@ namespace final
                             case "양품":
                                 bad1++;
                                 break;
-                            case "웨이퍼 작업 불량":
+                            case "웨이퍼 훼손":
                                 bad1++;
                                 break;
-                            case "칩 없음":
+                            case "웨이퍼 작업 불량":
                                 bad2++;
+                                break;
+                            case "칩 없음":
+                                bad3++;
                                 break;
 
                         }
                     }
                 }
-                string[] type = new string[] { "bad1", "bad2"};
-                int[] bad = new int[] { bad1, bad2};
+                string[] type = new string[] { "bad1", "bad2","bad3"};
+                int[] bad = new int[] { bad1, bad2,bad3};
                 for (int i = 0; i < type.Length; i++)
                 {
                     bad_chart.Series[0].Points.AddXY(type[i], bad[i]);

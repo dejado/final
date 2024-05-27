@@ -73,11 +73,7 @@ namespace final
             process.SizeMode = PictureBoxSizeMode.StretchImage;
             process.Anchor = AnchorStyles.None;
             process.Size = new Size(800, 300);
-            tablePanel.Controls.Add(process,1,1);
-
-
-
-            Picture_pcb();
+            tablePanel.Controls.Add(process,1,1);            
 
 
         }
