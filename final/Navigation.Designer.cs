@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.slidePanel = new System.Windows.Forms.Panel();
+            this.name_lb = new System.Windows.Forms.Label();
             this.manaBt = new System.Windows.Forms.Button();
             this.productBt = new System.Windows.Forms.Button();
             this.mainBt = new System.Windows.Forms.Button();
@@ -39,6 +40,7 @@
             this.panelTimer = new System.Windows.Forms.Timer(this.components);
             this.manageBt = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
             this.slidePanel.SuspendLayout();
             this.manageBt.SuspendLayout();
             this.SuspendLayout();
@@ -46,6 +48,8 @@
             // slidePanel
             // 
             this.slidePanel.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.slidePanel.Controls.Add(this.label1);
+            this.slidePanel.Controls.Add(this.name_lb);
             this.slidePanel.Controls.Add(this.manaBt);
             this.slidePanel.Controls.Add(this.productBt);
             this.slidePanel.Controls.Add(this.mainBt);
@@ -57,6 +61,17 @@
             this.slidePanel.Name = "slidePanel";
             this.slidePanel.Size = new System.Drawing.Size(200, 1033);
             this.slidePanel.TabIndex = 0;
+            // 
+            // name_lb
+            // 
+            this.name_lb.BackColor = System.Drawing.Color.AliceBlue;
+            this.name_lb.Font = new System.Drawing.Font("굴림", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.name_lb.Location = new System.Drawing.Point(0, 449);
+            this.name_lb.Name = "name_lb";
+            this.name_lb.Size = new System.Drawing.Size(200, 25);
+            this.name_lb.TabIndex = 25;
+            this.name_lb.Text = "이름";
+            this.name_lb.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // manaBt
             // 
@@ -151,6 +166,17 @@
             this.panel1.Size = new System.Drawing.Size(1702, 1033);
             this.panel1.TabIndex = 0;
             // 
+            // label1
+            // 
+            this.label1.BackColor = System.Drawing.Color.AliceBlue;
+            this.label1.Font = new System.Drawing.Font("굴림", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label1.Location = new System.Drawing.Point(0, 474);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(200, 25);
+            this.label1.TabIndex = 26;
+            this.label1.Text = "반갑습니다.";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // Navigation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -179,6 +205,8 @@
         private System.Windows.Forms.Button mainBt;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button manaBt;
+        private System.Windows.Forms.Label name_lb;
+        private System.Windows.Forms.Label label1;
     }
 }
 

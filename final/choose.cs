@@ -63,15 +63,20 @@ namespace final
             mold.Show();
             this.Close();
         }
+        ActUtlType plc = new ActUtlType();
         private void okBt_MouseDown(object sender, MouseEventArgs e)
         {
-
+            plc.SetDevice("M8191", 1);
+            okBt.MouseUp += delegate (object sender1, MouseEventArgs e1)
+            {
+                plc.SetDevice("M8191", 0);
+            };
         }
 
         private void okBt_Click(object sender, EventArgs e)
         {
-            ActUtlType plc = new ActUtlType();
-            plc.ActLogicalStationNumber = 3;    // PLC 논리 스테이션 번호 설정
+            
+            plc.ActLogicalStationNumber = 2;    // PLC 논리 스테이션 번호 설정
 
             int open = plc.Open();
             if (open == 0)
@@ -79,7 +84,10 @@ namespace final
                 if (!string.IsNullOrEmpty(chip) && !string.IsNullOrEmpty(pcb) && !string.IsNullOrEmpty(mold))
                 {
                     plc.SetDevice("M90", 1);
-                    plc.SetDevice("M8191", 1);
+                    plc.SetDevice("M83", 1);
+                    plc.SetDevice("M81", 0);
+                    plc.SetDevice("M82", 0);
+
                 }
 
             }

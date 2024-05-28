@@ -55,8 +55,7 @@ namespace final
 
         private void askBt_Click(object sender, EventArgs e)
         {
-            int id;
-            if (int.TryParse(idTxt.Text, out id))
+            if (int.TryParse(idTxt.Text, out int id))
             {
                 Console.WriteLine("성공");
             }
@@ -64,8 +63,7 @@ namespace final
             {
                 Console.WriteLine("실패");
             }
-            int pw;
-            if (int.TryParse(pwTxt.Text, out pw))
+            if (int.TryParse(pwTxt.Text, out int pw))
             {
                 Console.WriteLine("성공");
             }
@@ -157,22 +155,26 @@ namespace final
                 {
                     connection.Open();
 
-                    int pnum;
-                    if (!int.TryParse(idTxt.Text, out pnum))
+                    if (!int.TryParse(idTxt.Text, out int id))
                     {
                         MessageBox.Show("사원 번호를 올바르게 입력하세요.");
                         return;
                     }
-
+                    if (!int.TryParse(pwTxt.Text, out int pw))
+                    {
+                        MessageBox.Show("비밀번호를 올바르게 입력하세요.");
+                        return;
+                    }
                     string name = nameTxt.Text;
                     string depart = (departCom.SelectedItem != null) ? departCom.SelectedItem.ToString() : "";
                     string position = (positionCom.SelectedItem != null) ? positionCom.SelectedItem.ToString() : "";
 
-                    string insertQuery = "INSERT INTO login(pnum, name, depart, position, cdate) VALUES(@pnum, @name, @depart, @position, NOW())";
+                    string insertQuery = "INSERT INTO login(id,pw, name, depart, position, cdate) VALUES(@id,@pw, @name, @depart, @position, NOW())";
 
                     using (MySqlCommand command = new MySqlCommand(insertQuery, connection))
                     {
-                        command.Parameters.AddWithValue("@pnum", pnum);
+                        command.Parameters.AddWithValue("@id", id);
+                        command.Parameters.AddWithValue("@pw", pw);
                         command.Parameters.AddWithValue("@name", name);
                         command.Parameters.AddWithValue("@depart", depart);
                         command.Parameters.AddWithValue("@position", position);

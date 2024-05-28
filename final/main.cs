@@ -13,11 +13,23 @@ using System.Diagnostics;
 using Calendar.NET;
 using MySql.Data.MySqlClient;
 
+
 namespace final
 {
     public partial class main : UserControl
     {
-       
+        [CustomRecurringFunction("RehabDates", "Calculates which days I should be getting rehab therapy")]
+        private bool RehabDays(IEvent evnt, DateTime day)
+        {
+            if (day.DayOfWeek == DayOfWeek.Friday)
+            {
+                if (day.Ticks >= (new DateTime(2025, 7, 1)).Ticks)
+                    return false;
+                return true;
+            }
+            return false;
+        }
+
 
         public main()
         {
@@ -34,13 +46,16 @@ namespace final
             Calendar_cal.LoadPresetHolidays = false;
             Calendar_cal.AllowEditingEvents = true;
             // 이벤트 생성
-            var groundhogEvent = new HolidayEvent
+            var rehabEvent = new CustomEvent
             {
                 Date = DateTime.Now,
-                RecurringFrequency = RecurringFrequencies.EveryWeekend,
-                EventTextColor = Color.Red
+                RecurringFrequency = RecurringFrequencies.Custom,
+                EventText = "생산 마감 일자",
+                Rank = 3,
+                CustomRecurringFunction = RehabDays
             };
-            Calendar_cal.AddEvent(groundhogEvent);
+            Calendar_cal.AddEvent(rehabEvent);
+
         }
 
         // 데이터 그리드 뷰에 테이블 내용을 표시하는 메서드

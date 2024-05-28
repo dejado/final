@@ -32,8 +32,6 @@
             this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.label12 = new System.Windows.Forms.Label();
             this.offBt = new System.Windows.Forms.Button();
@@ -53,9 +51,9 @@
             this.Mdobot = new System.Windows.Forms.Button();
             this.Adobot = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.RLS = new System.Windows.Forms.Button();
+            this.servo_con = new System.Windows.Forms.Button();
+            this.servo_ware = new System.Windows.Forms.Button();
             this.DOG = new System.Windows.Forms.Button();
-            this.FLS = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.conTxt = new System.Windows.Forms.Label();
             this.conStopBt = new System.Windows.Forms.Button();
@@ -107,6 +105,9 @@
             this.chip_sensor = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.psignal_down = new System.Windows.Forms.Button();
+            this.psignal_up = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
             this.grn_run = new System.Windows.Forms.Button();
             this.yel_run = new System.Windows.Forms.Button();
             this.red_run = new System.Windows.Forms.Button();
@@ -128,9 +129,6 @@
             this.mysql_chip = new System.Windows.Forms.Label();
             this.mysql_pcb = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.psignal_down = new System.Windows.Forms.Button();
-            this.psignal_up = new System.Windows.Forms.Button();
-            this.label8 = new System.Windows.Forms.Label();
             this.groupBox7.SuspendLayout();
             this.panel3.SuspendLayout();
             this.groupBox10.SuspendLayout();
@@ -162,8 +160,6 @@
             // 
             // panel3
             // 
-            this.panel3.Controls.Add(this.button2);
-            this.panel3.Controls.Add(this.button1);
             this.panel3.Controls.Add(this.groupBox10);
             this.panel3.Controls.Add(this.groupBox9);
             this.panel3.Controls.Add(this.groupBox8);
@@ -178,25 +174,6 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(1714, 318);
             this.panel3.TabIndex = 21;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(1084, 288);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 28;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(967, 288);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 27;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
             // 
             // groupBox10
             // 
@@ -342,6 +319,7 @@
             this.finish.TabIndex = 1;
             this.finish.Text = "종료";
             this.finish.UseVisualStyleBackColor = true;
+            this.finish.Click += new System.EventHandler(this.finish_Click);
             this.finish.MouseDown += new System.Windows.Forms.MouseEventHandler(this.finish_MouseDown);
             // 
             // groupBox8
@@ -388,50 +366,52 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.RLS);
+            this.groupBox3.Controls.Add(this.servo_con);
+            this.groupBox3.Controls.Add(this.servo_ware);
             this.groupBox3.Controls.Add(this.DOG);
-            this.groupBox3.Controls.Add(this.FLS);
-            this.groupBox3.Location = new System.Drawing.Point(634, 20);
+            this.groupBox3.Location = new System.Drawing.Point(953, 20);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(295, 91);
             this.groupBox3.TabIndex = 23;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "타워 램프";
+            this.groupBox3.Text = "서보 위치 기동";
             // 
-            // RLS
+            // servo_con
             // 
-            this.RLS.Location = new System.Drawing.Point(191, 34);
-            this.RLS.Name = "RLS";
-            this.RLS.Size = new System.Drawing.Size(75, 38);
-            this.RLS.TabIndex = 5;
-            this.RLS.Text = "RLS";
-            this.RLS.UseVisualStyleBackColor = true;
+            this.servo_con.Location = new System.Drawing.Point(197, 34);
+            this.servo_con.Name = "servo_con";
+            this.servo_con.Size = new System.Drawing.Size(75, 38);
+            this.servo_con.TabIndex = 6;
+            this.servo_con.Text = "컨베이어";
+            this.servo_con.UseVisualStyleBackColor = true;
+            this.servo_con.MouseDown += new System.Windows.Forms.MouseEventHandler(this.servo_con_MouseDown);
+            // 
+            // servo_ware
+            // 
+            this.servo_ware.Location = new System.Drawing.Point(107, 34);
+            this.servo_ware.Name = "servo_ware";
+            this.servo_ware.Size = new System.Drawing.Size(75, 38);
+            this.servo_ware.TabIndex = 5;
+            this.servo_ware.Text = "창고";
+            this.servo_ware.UseVisualStyleBackColor = true;
+            this.servo_ware.MouseDown += new System.Windows.Forms.MouseEventHandler(this.servo_ware_MouseDown);
             // 
             // DOG
             // 
-            this.DOG.Location = new System.Drawing.Point(105, 34);
+            this.DOG.Location = new System.Drawing.Point(17, 33);
             this.DOG.Name = "DOG";
             this.DOG.Size = new System.Drawing.Size(75, 38);
             this.DOG.TabIndex = 4;
             this.DOG.Text = "DOG";
             this.DOG.UseVisualStyleBackColor = true;
-            this.DOG.Click += new System.EventHandler(this.DOG_Click);
-            // 
-            // FLS
-            // 
-            this.FLS.Location = new System.Drawing.Point(17, 34);
-            this.FLS.Name = "FLS";
-            this.FLS.Size = new System.Drawing.Size(75, 38);
-            this.FLS.TabIndex = 3;
-            this.FLS.Text = "FLS";
-            this.FLS.UseVisualStyleBackColor = true;
+            this.DOG.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DOG_MouseDown);
             // 
             // groupBox6
             // 
             this.groupBox6.Controls.Add(this.conTxt);
             this.groupBox6.Controls.Add(this.conStopBt);
             this.groupBox6.Controls.Add(this.conStartBt);
-            this.groupBox6.Location = new System.Drawing.Point(953, 25);
+            this.groupBox6.Location = new System.Drawing.Point(634, 20);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(295, 86);
             this.groupBox6.TabIndex = 25;
@@ -583,6 +563,7 @@
             this.pcb_down.Text = "후진";
             this.pcb_down.UseVisualStyleBackColor = true;
             this.pcb_down.Click += new System.EventHandler(this.pcb_down_Click);
+            this.pcb_down.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pcb_down_MouseDown);
             // 
             // pcb_up
             // 
@@ -592,7 +573,7 @@
             this.pcb_up.TabIndex = 0;
             this.pcb_up.Text = "전진";
             this.pcb_up.UseVisualStyleBackColor = true;
-            this.pcb_up.Click += new System.EventHandler(this.pcb_up_Click);
+            this.pcb_up.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pcb_up_MouseDown);
             // 
             // groupBox2
             // 
@@ -1040,6 +1021,44 @@
             this.panel2.Size = new System.Drawing.Size(166, 566);
             this.panel2.TabIndex = 1;
             // 
+            // psignal_down
+            // 
+            this.psignal_down.AutoSize = true;
+            this.psignal_down.Dock = System.Windows.Forms.DockStyle.Top;
+            this.psignal_down.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.psignal_down.Location = new System.Drawing.Point(0, 390);
+            this.psignal_down.Name = "psignal_down";
+            this.psignal_down.Size = new System.Drawing.Size(166, 28);
+            this.psignal_down.TabIndex = 22;
+            this.psignal_down.Text = "pcb 후진 신호";
+            this.psignal_down.UseVisualStyleBackColor = true;
+            // 
+            // psignal_up
+            // 
+            this.psignal_up.AutoSize = true;
+            this.psignal_up.Dock = System.Windows.Forms.DockStyle.Top;
+            this.psignal_up.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.psignal_up.Location = new System.Drawing.Point(0, 362);
+            this.psignal_up.Name = "psignal_up";
+            this.psignal_up.Size = new System.Drawing.Size(166, 28);
+            this.psignal_up.TabIndex = 21;
+            this.psignal_up.Text = "pcb 전진 신호";
+            this.psignal_up.UseVisualStyleBackColor = true;
+            // 
+            // label8
+            // 
+            this.label8.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.label8.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label8.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.label8.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label8.Location = new System.Drawing.Point(0, 340);
+            this.label8.Margin = new System.Windows.Forms.Padding(0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(166, 22);
+            this.label8.TabIndex = 20;
+            this.label8.Text = "pcb 실린더 신호";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // grn_run
             // 
             this.grn_run.AutoSize = true;
@@ -1283,44 +1302,6 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // psignal_down
-            // 
-            this.psignal_down.AutoSize = true;
-            this.psignal_down.Dock = System.Windows.Forms.DockStyle.Top;
-            this.psignal_down.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.psignal_down.Location = new System.Drawing.Point(0, 390);
-            this.psignal_down.Name = "psignal_down";
-            this.psignal_down.Size = new System.Drawing.Size(166, 28);
-            this.psignal_down.TabIndex = 22;
-            this.psignal_down.Text = "pcb 후진 신호";
-            this.psignal_down.UseVisualStyleBackColor = true;
-            // 
-            // psignal_up
-            // 
-            this.psignal_up.AutoSize = true;
-            this.psignal_up.Dock = System.Windows.Forms.DockStyle.Top;
-            this.psignal_up.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.psignal_up.Location = new System.Drawing.Point(0, 362);
-            this.psignal_up.Name = "psignal_up";
-            this.psignal_up.Size = new System.Drawing.Size(166, 28);
-            this.psignal_up.TabIndex = 21;
-            this.psignal_up.Text = "pcb 전진 신호";
-            this.psignal_up.UseVisualStyleBackColor = true;
-            // 
-            // label8
-            // 
-            this.label8.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label8.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label8.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.label8.Font = new System.Drawing.Font("굴림", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label8.Location = new System.Drawing.Point(0, 340);
-            this.label8.Margin = new System.Windows.Forms.Padding(0);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(166, 22);
-            this.label8.TabIndex = 20;
-            this.label8.Text = "pcb 실린더 신호";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // product
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -1398,10 +1379,6 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.HScrollBar hScrollBar1;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Button RLS;
-        private System.Windows.Forms.Button DOG;
-        private System.Windows.Forms.Button FLS;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.Label conTxt;
         private System.Windows.Forms.Button conStopBt;
@@ -1457,10 +1434,12 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button psignal_down;
         private System.Windows.Forms.Button psignal_up;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Button servo_con;
+        private System.Windows.Forms.Button servo_ware;
+        private System.Windows.Forms.Button DOG;
     }
 }

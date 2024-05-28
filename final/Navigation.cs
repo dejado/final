@@ -29,7 +29,10 @@ namespace final
             main =new main();
             panel1.Controls.Add(main);
             main.Dock= DockStyle.Fill;
-            
+
+            name_lb.Text = Properties.Settings.Default.Name +" 님";
+
+
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)

@@ -23,15 +23,60 @@ namespace final
             ShowGrid(currentTable); // 기본으로 "pcb" 테이블 표시
 
             // 버튼 클릭 이벤트 핸들러 설정
-            pcbBt.Click += (sender, e) => ShowGrid("pcb");
-            moldBt.Click += (sender, e) => ShowGrid("mold");
-            chipBt.Click += (sender, e) => ShowGrid("chip");
-            goodBt.Click += (sender, e) => ShowGrid("good");
-            badBt.Click += (sender, e) => ShowGrid("bad");
+            pcbBt.Click += (sender, e)
+                =>
+            {
+                ShowGrid("pcb");
+                ComboWare();
+            };
+            moldBt.Click += (sender, e)
+                =>
+            {
+                ShowGrid("mold");
+                ComboWare();
+            };
+            chipBt.Click += (sender, e)
+                =>
+            {
+                ShowGrid("chip");
+                ComboWare();
+            };
+            goodBt.Click += (sender, e)
+                =>
+            {
+                ShowGrid("good");
+                ComboGood();
+            };
+            badBt.Click += (sender, e)
+                =>
+            {
+                ShowGrid("bad");
+                ComboBad();
+            };
+        }
+
+        private void ComboWare()
+        {
+            typeCom.Items.Clear();
+            typeCom.Items.Add("A");
+            typeCom.Items.Add("B");
+            typeCom.Items.Add("C");
+        }
+        private void ComboGood()
+        {
+            typeCom.Items.Clear();
+            typeCom.Items.Add("양품");
+        }
+        private void ComboBad()
+        {
+            typeCom.Items.Clear();
+            typeCom.Items.Add("웨이퍼 작업 불량");
+            typeCom.Items.Add("웨이퍼 훼손");
+            typeCom.Items.Add("칩 없음");
         }
 
         // 데이터 그리드 뷰에 테이블 내용을 표시하는 메서드
-        public void ShowGrid(string tableName)
+        private void ShowGrid(string tableName)
         {
             currentTable = tableName; // 현재 테이블을 업데이트
 
@@ -73,8 +118,7 @@ namespace final
         private void askBt_Click(object sender, EventArgs e)
         {
             // 사용자 입력 가져오기
-            int lot;
-            if(int.TryParse(lotTxt.Text,out lot))
+            if(int.TryParse(lotTxt.Text,out int lot))
             {
                 Console.WriteLine("성공");
             }
@@ -108,7 +152,7 @@ namespace final
                     query += $" AND lot={lot}";
                 if (!string.IsNullOrEmpty(type))
                     query += $" AND type='{type}'";
-                if (!string.IsNullOrEmpty(date))
+                if (date!= "1989-01-01")
                     query += $" AND date='{date}'";
 
                 MySqlCommand cmd = new MySqlCommand(query, connection);

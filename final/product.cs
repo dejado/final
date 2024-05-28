@@ -16,7 +16,7 @@ namespace final
         ActUtlType plc = new ActUtlType();
         int open;
         int close;
-        int pcbSpeed = 5;   //pcb 이동속도
+        int pcbSpeed = 10;   //pcb 이동속도
 
         int chip;
         int vision;
@@ -58,6 +58,12 @@ namespace final
         string pcb_num;
         string mold_num;
 
+        int servo;
+
+        int chip_stop;
+        int pcb_stop;
+        int mold_stop;
+
         PictureBox process;
         PictureBox pcb;
 
@@ -66,7 +72,7 @@ namespace final
             InitializeComponent();
             InitializeTimer();
 
-            plc.ActLogicalStationNumber = 3;    // PLC 논리 스테이션 번호 설정
+            plc.ActLogicalStationNumber = 2;    // PLC 논리 스테이션 번호 설정
 
             process =new PictureBox();
             process.Image = Properties.Resources.process;
@@ -77,22 +83,29 @@ namespace final
 
 
         }
+        private List<PictureBox> pcbs = new List<PictureBox>(); // PictureBox 리스트를 선언하여 여러 개의 PCB를 관리
+
         private void Picture_pcb()
         {
-            pcb = new PictureBox();
-            pcb.Image = Properties.Resources.pcb2;
-            pcb.SizeMode = PictureBoxSizeMode.StretchImage;
-            pcb.Size = new Size(30, 15);
-            pcb.Location = new Point(520, 120);
-            process.Controls.Add(pcb);
+            // 새 PictureBox 생성 및 설정
+            PictureBox newPcb = new PictureBox();
+            newPcb.Image = Properties.Resources.pcb2;
+            newPcb.SizeMode = PictureBoxSizeMode.StretchImage;
+            newPcb.Size = new Size(30, 15);
+            newPcb.Location = new Point(520, 120);
+            process.Controls.Add(newPcb);
+
+            // 리스트에 새로운 PictureBox 추가
+            pcbs.Add(newPcb);
         }
+
         private void InitializeTimer()
         {
             // Timer 인스턴스 생성
             timer1 = new Timer();
 
             // 타이머 간격 설정 (예: 10초 = 10000 밀리초)
-            timer1.Interval = 500;
+            timer1.Interval = 300;
 
             // Tick 이벤트 핸들러 추가
             timer1.Tick += timer1_Tick;
@@ -100,48 +113,138 @@ namespace final
             // 타이머 시작
             timer1.Start();
         }
+
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Picture_pcb();
+        }
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            PictureBox pcbToRemove = pcbs[0];
+            pcbToRemove.Hide();
+            process.Controls.Remove(pcbToRemove);
+            pcbToRemove.Dispose();
+            pcbs.RemoveAt(0);
+        }
+        bool wareUpdateDone = false;
         bool attachUpdateDone = false;
         bool pcbUpdateDone = false;
         bool moldUpdateDone = false;
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+
             if (con == 1)
             {
-                pcb.Left -= pcbSpeed;
+                foreach (PictureBox pcb in pcbs)
+                {
+                    pcb.Left -= pcbSpeed; // 모든 PCB를 왼쪽으로 이동
+                }
             }
 
 
-            plc.GetDevice("X26", out chip);
-            plc.GetDevice("X27", out vision);
-            plc.GetDevice("X28", out mold);
-            plc.GetDevice("X2A", out ware);
-
-            if (ware == 1)
+            if (servo == 1)
             {
-                pcb.Hide();
+                // Check if the list is not empty
+                if (pcbs.Count > 0)
+                {
+                    // 가장 먼저 생성된 PCB를 제거하고 리스트에서도 제거
+                    PictureBox pcbToRemove = pcbs[0];
+                    pcbToRemove.Hide();
+                    process.Controls.Remove(pcbToRemove);
+                    pcbToRemove.Dispose();
+                    pcbs.RemoveAt(0);
+                }
             }
 
-            if (chip == 1||vision==1||mold==1||ware==1)
+
+            if (chip_out == 1 || mold_out==1|| vision_out == 1)
             {
                 pcbSpeed = 0;
             }
             else
             {
-                pcbSpeed = 5;
+                pcbSpeed = 10;
             }
 
             sensor();
             output();
             text();
+            GetData();
+            MinusNum();
+            //StopProcess();
 
+            if (string.IsNullOrEmpty(pcb_lot)|| string.IsNullOrEmpty(mold_lot)|| string.IsNullOrEmpty(chip_lot))
+            {
+                plc.SetDevice("M82", 1);
+            }
+        }
+
+        private void MessProcess()
+        {
+            if (string.IsNullOrEmpty(chip_lot))
+            {
+                MessageBox.Show("chip을 추가해 주세요");
+            }
+            if (string.IsNullOrEmpty(pcb_lot))
+            {
+                MessageBox.Show("pcb를 추가해 주세요");
+            }
+            if (string.IsNullOrEmpty(mold_lot))
+            {
+                MessageBox.Show("mold를 추가해 주세요");
+            }
+
+        }
+        private void StopProcess()
+        {
+            if (string.IsNullOrEmpty(chip_lot))
+            {
+                plc.SetDevice("M92", 1);
+            }
+            else
+            {
+                plc.SetDevice("M92", 0);
+            }
+
+            if (string.IsNullOrEmpty(pcb_lot))
+            {
+                plc.SetDevice("M91", 1);
+            }
+            else
+            {
+                plc.SetDevice("M91", 0);
+            }
+
+            if (string.IsNullOrEmpty(mold_lot))
+            {
+                plc.SetDevice("M93", 1);
+            }
+            else
+            {
+                plc.SetDevice("M93", 0);
+            }
+
+
+
+            if (chip_stop == 1 && pcb_stop == 1 && mold_stop == 1 && servo == 1)
+            {
+                plc.SetDevice("M115", 1);
+            }
+            else
+            {
+                plc.SetDevice("M115", 0);
+            }
+        }
+        private void MinusNum()
+        {
             if (attach_start == 1 && !string.IsNullOrEmpty(chip_lot) && !attachUpdateDone)
             {
                 chipUpdate(chip_lot, chip_num);
                 attachUpdateDone = true;
             }
-
-            if (attach_start == 0)
+            else if (attach_start == 0)
             {
                 attachUpdateDone = false; // 다시 업데이트 가능하도록 설정
             }
@@ -150,9 +253,9 @@ namespace final
             {
                 pcbUpdate(pcb_lot, pcb_num);
                 pcbUpdateDone = true;
-            }
 
-            if (pcb_in == 0)
+            }
+            else if (pcb_in == 0)
             {
                 pcbUpdateDone = false; // 다시 업데이트 가능하도록 설정
             }
@@ -162,11 +265,24 @@ namespace final
                 moldUpdate(mold_lot, mold_num);
                 moldUpdateDone = true;
             }
-
-            if (mold_start == 0)
+            else if (mold_start == 0)
             {
                 moldUpdateDone = false; // 다시 업데이트 가능하도록 설정
             }
+
+        }
+        private void GetData()
+        {
+            plc.GetDevice("X26", out chip);
+            plc.GetDevice("X27", out vision);
+            plc.GetDevice("X28", out mold);
+            plc.GetDevice("X2A", out ware);
+
+            plc.GetDevice("D0", out servo);
+
+            plc.GetDevice("M92", out chip_stop);
+            plc.GetDevice("M91", out pcb_stop);
+            plc.GetDevice("M93", out mold_stop);
         }
         private void text()
         {
@@ -525,7 +641,12 @@ namespace final
 
             plc.GetDevice("Y41", out pcb_in);
             plc.GetDevice("Y42", out pcb_out);
-            if (pcb_in == 1) { psignal_up.BackColor = Color.Red; }
+            if (pcb_in == 1)
+            { 
+                psignal_up.BackColor = Color.Red;
+                Picture_pcb();
+
+            }
             else { psignal_up.BackColor = Color.White; }
             if (pcb_out == 1) { psignal_down.BackColor = Color.Red; }
             else { psignal_down.BackColor = Color.White; }
@@ -633,11 +754,6 @@ namespace final
             mold_lb.Text = "몰드 다운";
         }
 
-        private void pcb_up_Click(object sender, EventArgs e)
-        {
-            plc.SetDevice("M73", 1);
-            plc.SetDevice("M74", 0);
-        }
 
         private void pcb_down_Click(object sender, EventArgs e)
         {
@@ -703,22 +819,13 @@ namespace final
             plc.SetDevice("M82", 0);
             plc.SetDevice("M83", 0);
         }
-        private void FLS_MouseDown(object sender, MouseEventArgs e)
-        {
-
-        }
-
+ 
         private void DOG_MouseDown(object sender, MouseEventArgs e)
         {
             plc.SetDevice("M8", 1);
             DOG.MouseUp+=delegate(object sender1, MouseEventArgs e1){
-                plc.SetDevice("M8", 1);
+                plc.SetDevice("M8", 0);
             };
-        }
-
-        private void RLS_MouseDown(object sender, MouseEventArgs e)
-        {
-
         }
 
 
@@ -742,11 +849,6 @@ namespace final
 
             // 새로운 값을 preValue에 저장합니다.
             preValue = newValue;
-        }
-
-        private void DOG_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void onBt_Click(object sender, EventArgs e)
@@ -798,6 +900,49 @@ namespace final
             finish.MouseUp += delegate (object sender1, MouseEventArgs e1)
             {
                 plc.SetDevice("M115", 0);
+            };
+        }
+
+        private void servo_ware_MouseDown(object sender, MouseEventArgs e)
+        {
+            plc.SetDevice("M908", 1);
+            servo_ware.MouseUp += delegate (object sender1, MouseEventArgs e1)
+            {
+                plc.SetDevice("M908", 0);
+            };
+        }
+
+        private void servo_con_MouseDown(object sender, MouseEventArgs e)
+        {
+            plc.SetDevice("M902", 1);
+            servo_con.MouseUp+= delegate (object sender1, MouseEventArgs e1)
+            {
+                plc.SetDevice("M902", 0);
+            };
+        }
+
+        private void finish_Click(object sender, EventArgs e)
+        {
+            plc.SetDevice("M81", 1);
+            plc.SetDevice("M83", 0);
+        }
+
+        private void pcb_up_MouseDown(object sender, MouseEventArgs e)
+        {
+            plc.SetDevice("M73", 1);
+            pcb_up.MouseUp += delegate (object sender1, MouseEventArgs e1)
+            {
+                plc.SetDevice("M73", 0);
+            };
+            
+        }
+
+        private void pcb_down_MouseDown(object sender, MouseEventArgs e)
+        {
+            plc.SetDevice("M74", 1);
+            pcb_down.MouseUp+=delegate (object sender1, MouseEventArgs e1)
+            {
+                plc.SetDevice("M74", 0);
             };
         }
     }
